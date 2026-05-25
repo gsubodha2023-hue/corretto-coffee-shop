@@ -1,5 +1,22 @@
-# Vue 3 + TypeScript + Vite
+# ☕ Corretto Coffee Shop
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A modern Single Page Application for a coffee shop built with Vue 3, TypeScript, Vite, and Tailwind CSS.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Features
+
+- Vue 3 Composition API + TypeScript
+- Tailwind CSS responsive layout
+- DummyJSON API integration with search
+- Product detail modal
+- Shopping cart with localStorage
+- Hero image slider
+- Reusable component architecture
+
+## Tech Stack
+
+- Vue 3 + TypeScript
+- Vite
+- Tailwind CSS
+- DummyJSON REST API
+
+## Setup
