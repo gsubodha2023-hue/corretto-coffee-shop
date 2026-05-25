@@ -18,5 +18,3 @@ A modern Single Page Application for a coffee shop built with Vue 3, TypeScript,
 - Vite
 - Tailwind CSS
 - DummyJSON REST API
-
-## Setup
