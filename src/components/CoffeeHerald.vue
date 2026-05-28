@@ -19,15 +19,15 @@ const heralds: HeraldItem[] = [
     id: 2,
     title: 'FRIENDLY STAFF',
     description: 'Friendly staff warmly greet customers and provide excellent service every visit.',
-    image: 'https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=500&q=85',
-    fallback: 'https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=500&q=85'
+    image: '/src/assets/friendly-staff.avif',
+    fallback: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=90'
   },
   {
     id: 3,
     title: 'FRESH COFFEE',
     description: 'Fresh coffee is brewed daily, offering rich aroma and delicious taste.',
-    image: 'https://images.unsplash.com/photo-1534687941688-651ccaafbff8?w=500&q=85',
-    fallback: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&q=85'
+    image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=90',
+    fallback: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=90'
   }
 ]
 
@@ -41,7 +41,7 @@ function onImgError(e: Event, item: HeraldItem): void {
   <section class="py-24 relative overflow-hidden transition-colors duration-300
                   bg-coffee-beige dark:bg-gray-800">
 
-    <!-- Left decorative coffee plant -->
+    <!-- Left decorative plant -->
     <div class="absolute top-0 left-0 w-40 h-full opacity-10 pointer-events-none">
       <svg viewBox="0 0 200 700" fill="none" class="w-full h-full">
         <path d="M40 700 Q60 500 80 380 Q100 260 60 120" stroke="#c8a27a" stroke-width="2" fill="none"/>
@@ -86,7 +86,8 @@ function onImgError(e: Event, item: HeraldItem): void {
           :key="item.id"
           class="text-center group"
         >
-          <!-- Image with border frame -->
+
+          <!-- Image frame -->
           <div class="border-2 p-2 mb-5 max-w-[300px] mx-auto overflow-hidden transition-colors duration-300
                       border-coffee-mid/30 dark:border-gray-600">
             <img
@@ -110,17 +111,21 @@ function onImgError(e: Event, item: HeraldItem): void {
             {{ item.description }}
           </p>
 
-          <!-- READ MORE -->
-          <a href="#"
-             class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] transition-colors group/btn
-                    text-gray-800 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-400">
+          <!-- READ MORE button -->
+          <a
+            href="#"
+            class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] transition-colors group/btn
+                   text-gray-800 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-400"
+          >
             READ MORE
-            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs border border-current transition-all
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs
+                         border border-current transition-all
                          bg-coffee-dark dark:bg-amber-600 text-white
                          group-hover/btn:bg-amber-700 dark:group-hover/btn:bg-amber-500">
               →
             </span>
           </a>
+
         </div>
       </div>
 
