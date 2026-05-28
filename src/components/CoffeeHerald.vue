@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 interface HeraldItem {
   id: number
   title: string
-  description: string
+  shortDesc: string
+  fullDesc: string
   image: string
   fallback: string
 }
@@ -11,25 +14,56 @@ const heralds: HeraldItem[] = [
   {
     id: 1,
     title: 'NEW TECHNOLOGY',
-    description: 'Smart coffee machines use AI and automation for precise brewing control..',
+    shortDesc: 'Smart coffee machines use AI and automation for precise brewing control..',
+    fullDesc: `Smart coffee machines use AI and automation for precise brewing control, helping our coffee shop deliver fresh, rich, and perfectly balanced coffee in every cup. We use modern espresso machines, advanced grinders, and temperature-controlled brewing systems to maintain high quality and consistent taste for both takeaway and dine-in customers.
+
+Our skilled baristas combine technology with expert coffee-making techniques, including proper bean grinding, milk steaming, and brewing timing, to create smooth and flavorful beverages. Customers can enjoy a comfortable dining experience in our shop or quickly order takeaway drinks prepared with speed, hygiene, and care.
+
+By using modern coffee technology and premium ingredients, we provide delicious coffee, excellent service, and a relaxing atmosphere for every customer.`,
     image: '/src/assets/coffee-machine.jpg',
     fallback: 'https://images.unsplash.com/photo-1516743619420-154b70a65fea?w=600&q=90'
   },
   {
     id: 2,
     title: 'FRIENDLY STAFF',
-    description: 'Friendly staff warmly greet customers and provide excellent service every visit.',
+    shortDesc: 'Friendly staff warmly greet customers and provide excellent service every visit.',
+    fullDesc: `Friendly staff warmly greet customers and provide excellent service during every visit, creating a welcoming and comfortable atmosphere in our coffee shop. Our team is always ready to help customers choose the perfect coffee, pastries, and beverages based on their preferences.
+
+With positive attitudes, quick service, and professional communication, we ensure both dine-in and takeaway customers enjoy a pleasant experience. Our staff maintain cleanliness, respect customer needs, and work together to provide fast, reliable, and high-quality service.
+
+Every customer feels valued and satisfied through our dedication to hospitality and care.`,
     image: '/src/assets/friendly-staff.avif',
     fallback: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=90'
   },
   {
     id: 3,
     title: 'FRESH COFFEE',
-    description: 'Fresh coffee is brewed daily, offering rich aroma and delicious taste.',
+    shortDesc: 'Fresh coffee is brewed daily, offering rich aroma and delicious taste.',
+    fullDesc: `Fresh coffee is brewed daily, offering rich aroma and delicious taste to every customer who visits our coffee shop. We carefully select high-quality coffee beans and prepare each cup with modern brewing techniques to ensure freshness and flavor in every sip.
+
+Along with our coffee, we serve freshly baked pastries, cakes, and snacks made with quality ingredients for a soft, tasty, and enjoyable experience. Whether customers choose dine-in or takeaway service, they can always enjoy fresh products and excellent quality.
+
+A warm café atmosphere makes every visit special and memorable for all our customers.`,
     image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=90',
     fallback: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=90'
   }
 ]
+
+// Modal state
+const showModal    = ref<boolean>(false)
+const activeItem   = ref<HeraldItem | null>(null)
+
+function openModal(item: HeraldItem): void {
+  activeItem.value = item
+  showModal.value  = true
+  document.body.style.overflow = 'hidden'
+}
+
+function closeModal(): void {
+  showModal.value  = false
+  activeItem.value = null
+  document.body.style.overflow = ''
+}
 
 function onImgError(e: Event, item: HeraldItem): void {
   const img = e.target as HTMLImageElement
@@ -86,7 +120,6 @@ function onImgError(e: Event, item: HeraldItem): void {
           :key="item.id"
           class="text-center group"
         >
-
           <!-- Image frame -->
           <div class="border-2 p-2 mb-5 max-w-[300px] mx-auto overflow-hidden transition-colors duration-300
                       border-coffee-mid/30 dark:border-gray-600">
@@ -105,15 +138,15 @@ function onImgError(e: Event, item: HeraldItem): void {
             {{ item.title }}
           </h3>
 
-          <!-- Description -->
+          <!-- Short Description -->
           <p class="text-sm leading-relaxed mb-5 max-w-xs mx-auto transition-colors duration-300
                     text-gray-500 dark:text-gray-400">
-            {{ item.description }}
+            {{ item.shortDesc }}
           </p>
 
-          <!-- READ MORE button -->
-          <a
-            href="#"
+          <!-- READ MORE button — opens modal -->
+          <button
+            @click="openModal(item)"
             class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] transition-colors group/btn
                    text-gray-800 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-400"
           >
@@ -124,11 +157,109 @@ function onImgError(e: Event, item: HeraldItem): void {
                          group-hover/btn:bg-amber-700 dark:group-hover/btn:bg-amber-500">
               →
             </span>
-          </a>
-
+          </button>
         </div>
       </div>
-
     </div>
+
+    <!-- ===== MODAL POPUP ===== -->
+    <Teleport to="body">
+      <Transition name="fade">
+        <div
+          v-if="showModal && activeItem"
+          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+          @click.self="closeModal"
+        >
+          <Transition name="slide-up">
+            <div
+              v-if="showModal"
+              class="relative w-full max-w-2xl rounded-sm shadow-2xl overflow-hidden transition-colors duration-300
+                     bg-white dark:bg-gray-900"
+            >
+              <!-- Modal Image -->
+              <div class="relative h-56 overflow-hidden">
+                <img
+                  :src="activeItem.image"
+                  :alt="activeItem.title"
+                  class="w-full h-full object-cover"
+                  @error="(e) => onImgError(e, activeItem!)"
+                />
+                <!-- Dark overlay on image -->
+                <div class="absolute inset-0 bg-black/40"></div>
+                <!-- Title on image -->
+                <div class="absolute bottom-0 left-0 right-0 p-6">
+                  <h3 class="text-2xl font-bold tracking-[0.2em] text-white"
+                      style="font-family:'Playfair Display',Georgia,serif;">
+                    {{ activeItem.title }}
+                  </h3>
+                </div>
+                <!-- Close button -->
+                <button
+                  @click="closeModal"
+                  class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-lg transition-colors
+                         bg-black/40 hover:bg-black/70"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <!-- Modal Content -->
+              <div class="p-8">
+                <!-- Decorative line -->
+                <div class="w-12 h-1 bg-amber-500 mb-6 rounded-full"></div>
+
+                <!-- Full description — split by newlines into paragraphs -->
+                <div class="space-y-4">
+                  <p
+                    v-for="(para, idx) in activeItem.fullDesc.split('\n\n')"
+                    :key="idx"
+                    class="text-sm leading-relaxed transition-colors duration-300
+                           text-gray-600 dark:text-gray-300"
+                  >
+                    {{ para }}
+                  </p>
+                </div>
+
+                <!-- Close button at bottom -->
+                <div class="mt-8 flex justify-end">
+                  <button
+                    @click="closeModal"
+                    class="px-8 py-3 text-xs font-bold tracking-[0.3em] text-white transition-colors rounded-sm
+                           bg-coffee-dark dark:bg-amber-600 hover:bg-amber-700 dark:hover:bg-amber-500"
+                  >
+                    CLOSE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Transition>
+        </div>
+      </Transition>
+    </Teleport>
+    <!-- ===== END MODAL ===== -->
+
   </section>
 </template>
+
+<style scoped>
+/* Backdrop fade */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Modal slide up */
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.35s ease;
+}
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
+}
+</style>
