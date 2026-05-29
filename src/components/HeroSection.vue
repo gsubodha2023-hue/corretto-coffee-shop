@@ -37,10 +37,19 @@ onUnmounted(() => clearInterval(timer))
 function goTo(index: number): void {
   current.value = index
 }
+
+// ✅ Working SHOP HERE button
+function scrollToShop(): void {
+  const shopSection = document.getElementById('shop')
+  if (shopSection) {
+    shopSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
 </script>
 
 <template>
   <section class="relative h-screen overflow-hidden">
+
     <!-- Slide Images -->
     <div
       v-for="(slide, idx) in slides"
@@ -48,7 +57,11 @@ function goTo(index: number): void {
       class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
       :class="idx === current ? 'opacity-100' : 'opacity-0'"
     >
-      <img :src="slide.image" :alt="slide.title" class="w-full h-full object-cover" />
+      <img
+        :src="slide.image"
+        :alt="slide.title"
+        class="w-full h-full object-cover"
+      />
       <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/70"></div>
     </div>
 
@@ -81,10 +94,27 @@ function goTo(index: number): void {
             {{ slides[current].description }}
           </p>
 
-          <!-- CTA Button -->
-          <button class="border border-white px-10 py-3 text-xs tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-300 font-bold">
-            SHOP HERE
+          <!-- ✅ WORKING SHOP HERE BUTTON -->
+          <button
+            @click="scrollToShop"
+            class="relative inline-flex items-center gap-3 border border-white px-12 py-4 text-xs tracking-[0.4em] font-bold
+                   overflow-hidden group transition-all duration-300
+                   hover:text-black"
+          >
+            <!-- Hover fill background -->
+            <span class="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0"></span>
+            <!-- Button text -->
+            <span class="relative z-10 flex items-center gap-3">
+              SHOP HERE
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round"
+                   class="group-hover:translate-x-1 transition-transform duration-300">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
           </button>
+
         </div>
       </div>
     </div>
@@ -99,5 +129,6 @@ function goTo(index: number): void {
         :class="idx === current ? 'bg-white scale-110' : 'bg-transparent hover:bg-white/40'"
       />
     </div>
+
   </section>
 </template>
