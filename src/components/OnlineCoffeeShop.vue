@@ -47,9 +47,9 @@ function handleAddToCart(product: CoffeeProduct): void {
 </script>
 
 <template>
-  <section class="py-24 relative overflow-hidden transition-colors duration-300
-                  bg-coffee-beige dark:bg-gray-800">
-
+  <!-- ADD id="online-shop" -->
+<section id="online-shop" class="py-24 relative overflow-hidden transition-colors duration-300
+                bg-coffee-beige dark:bg-gray-800">
     <!-- Left decorative plant -->
     <div class="absolute top-0 left-0 w-44 h-full opacity-10 pointer-events-none">
       <svg viewBox="0 0 200 700" fill="none" class="w-full h-full">

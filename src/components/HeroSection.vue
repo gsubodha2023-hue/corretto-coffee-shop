@@ -39,8 +39,9 @@ function goTo(index: number): void {
 }
 
 // ✅ Working SHOP HERE button
+// CHANGE TO THIS:
 function scrollToShop(): void {
-  const shopSection = document.getElementById('shop')
+  const shopSection = document.getElementById('online-shop')
   if (shopSection) {
     shopSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
@@ -70,14 +71,14 @@ function scrollToShop(): void {
       <div class="max-w-7xl mx-auto px-6 w-full">
         <div class="ml-auto max-w-lg text-white text-center">
 
-          <!-- Retro Badge -->
+          <!-- Retro Badge — your logo -->
           <div class="flex justify-center mb-8">
-            <div class="border border-white/60 rounded-full w-28 h-28 flex items-center justify-center p-4 text-center">
-              <div>
-                <div class="text-[9px] tracking-[0.2em] mb-1">RETROBRAND</div>
-                <div class="text-xl">☕</div>
-                <div class="text-[9px] tracking-[0.15em] mt-1">PREMIUM PRODUCT</div>
-              </div>
+            <div class="border border-white/60 rounded-full w-32 h-32 flex items-center justify-center p-3 bg-white/5 backdrop-blur-sm">
+              <img
+                src="/src/assets/slider-logo.png"
+                alt="Corretto Retro Brand"
+                class="w-full h-full object-contain"
+              />
             </div>
           </div>
 

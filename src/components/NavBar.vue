@@ -35,7 +35,7 @@ function handleNavClick(link: string): void {
   if (link === 'HOME') {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   } else if (link === 'SHOP') {
-    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })
+    document.getElementById('online-shop')?.scrollIntoView({ behavior: 'smooth' })
   } else if (link === 'CONTACT US') {
     contactOpen.value = true
   } else if (link === 'ABOUT US') {
