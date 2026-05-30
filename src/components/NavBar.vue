@@ -122,11 +122,14 @@ const selectedBlog = ref<typeof blogPosts[0] | null>(null)
   <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm text-white">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-      <!-- Logo -->
-      <div class="flex items-center gap-2 shrink-0 cursor-pointer" @click="handleNavClick('HOME')">
-        <div class="text-2xl">☕</div>
-        <div class="border-2 border-white px-4 py-1 font-bold text-base tracking-[0.3em]">CORRETTO</div>
-      </div>
+     <!-- Logo -->
+<div class="flex items-center shrink-0 cursor-pointer" @click="handleNavClick('HOME')">
+  <img
+    src="/src/assets/footer-logo.png"
+    alt="Corretto Coffee"
+    class="h-12 w-auto object-contain"
+  />
+</div>
 
       <!-- Desktop Nav -->
       <ul class="hidden lg:flex gap-8 text-xs tracking-widest">

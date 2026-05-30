@@ -126,11 +126,14 @@
       style="background: linear-gradient(rgba(0,0,0,0.88), rgba(0,0,0,0.92)),
              url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80') center/cover no-repeat;"
     >
-      <!-- Logo -->
-      <div class="flex items-center justify-center gap-3 mb-6">
-        <div class="text-2xl">☕</div>
-        <div class="border-2 border-white px-5 py-2 font-bold text-lg tracking-[0.3em]">CORRETTO</div>
-      </div>
+     <!-- Logo -->
+    <div class="flex items-center justify-center mb-6">
+      <img
+        src="/src/assets/footer-logo.png"
+        alt="Corretto Coffee"
+        class="h-16 w-auto object-contain"
+      />
+    </div>
 
       <!-- Tagline -->
       <p class="text-gray-400 text-sm max-w-lg mx-auto mb-10 leading-relaxed">
