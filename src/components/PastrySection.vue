@@ -6,6 +6,15 @@ import chocolateCroissant from '../assets/Chocolate_Croissant.jpg'
 import cinnamonRoll       from '../assets/Cinnamon_Roll.jpg'
 import appleTurnover      from '../assets/Apple_Turnover.jpg'
 import butterCroissant    from '../assets/Butter_Croissant.jpg'
+import tiramisuImg        from '../assets/Tiramisu.jpg'
+import cheeseCakeImg      from '../assets/Cheese_cake.jpeg'
+import chocolateCakeImg   from '../assets/Chocolate_cake.jpg'
+import bananaBreadImg     from '../assets/Banana_bred.jpg'
+import margheritaImg      from '../assets/Margherita_Pizza.png'
+import chickenBurgerImg   from '../assets/Double_Chicken_Burger.png'
+import fireGrillImg       from '../assets/Fire_Grill_Burger.png'
+import cheeseHotDogImg    from '../assets/Cheese_HotDog.png'
+import smokyHotDogImg     from '../assets/Smoky_Sausage_HotDog.png'
 
 interface PastryItem {
   id: number
@@ -15,21 +24,26 @@ interface PastryItem {
 }
 
 const allPastries: PastryItem[] = [
-  { id: 1,  name: 'SEAFOOD PASTRY',      price: 220, image: seafoodImg },
-  { id: 2,  name: 'CHICKEN PASTRY',      price: 180, image: chickenImg },
-  { id: 3,  name: 'LAVA CAKE',           price: 200, image: 'https://images.unsplash.com/photo-1617305855058-336d24456869?w=600&q=90' },
-  { id: 4,  name: 'CHOCOLATE CROISSANT', price: 160, image: chocolateCroissant },
-  { id: 5,  name: 'BLUEBERRY MUFFIN',    price: 140, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=90' },
-  { id: 6,  name: 'CINNAMON ROLL',       price: 170, image: cinnamonRoll },
-  { id: 7,  name: 'APPLE TURNOVER',      price: 175, image: appleTurnover },
-  { id: 8,  name: 'BANANA BREAD',        price: 165, image: 'https://images.unsplash.com/photo-1555533890-5b3d9e1e9f86?w=600&q=90' },
-  { id: 9,  name: 'ÉCLAIR',              price: 195, image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=90' },
-  { id: 10, name: 'MACARON',             price: 150, image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=90' },
-  { id: 11, name: 'TIRAMISU',            price: 250, image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=90' },
-  { id: 12, name: 'BUTTER CROISSANT',    price: 155, image: butterCroissant },
-  { id: 13, name: 'STRAWBERRY TART',     price: 210, image: 'https://images.unsplash.com/photo-1587248720327-8eb72564be1e?w=600&q=90' },
-  { id: 14, name: 'CHEESE CAKE',         price: 230, image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=90' },
-  { id: 15, name: 'CHOCOLATE CAKE',      price: 280, image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=90' },
+  { id: 1,  name: 'SEAFOOD PASTRY',        price: 220, image: seafoodImg },
+  { id: 2,  name: 'CHICKEN PASTRY',        price: 180, image: chickenImg },
+  { id: 3,  name: 'LAVA CAKE',             price: 200, image: 'https://images.unsplash.com/photo-1617305855058-336d24456869?w=600&q=90' },
+  { id: 4,  name: 'CHOCOLATE CROISSANT',   price: 160, image: chocolateCroissant },
+  { id: 5,  name: 'BLUEBERRY MUFFIN',      price: 140, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=90' },
+  { id: 6,  name: 'CINNAMON ROLL',         price: 170, image: cinnamonRoll },
+  { id: 7,  name: 'APPLE TURNOVER',        price: 175, image: appleTurnover },
+  { id: 8,  name: 'BANANA BREAD',          price: 165, image: bananaBreadImg },
+  { id: 9,  name: 'ÉCLAIR',               price: 195, image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=90' },
+  { id: 10, name: 'MACARON',               price: 150, image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=90' },
+  { id: 11, name: 'TIRAMISU',              price: 250, image: tiramisuImg },
+  { id: 12, name: 'BUTTER CROISSANT',      price: 155, image: butterCroissant },
+  { id: 13, name: 'STRAWBERRY TART',       price: 210, image: 'https://images.unsplash.com/photo-1587248720327-8eb72564be1e?w=600&q=90' },
+  { id: 14, name: 'CHEESE CAKE',           price: 230, image: cheeseCakeImg },
+  { id: 15, name: 'CHOCOLATE CAKE',        price: 280, image: chocolateCakeImg },
+  { id: 16, name: 'MARGHERITA PIZZA',      price: 350, image: margheritaImg },
+  { id: 17, name: 'DOUBLE CHICKEN BURGER', price: 420, image: chickenBurgerImg },
+  { id: 18, name: 'FIRE GRILL BURGER',     price: 390, image: fireGrillImg },
+  { id: 19, name: 'CHEESE HOT DOG',        price: 280, image: cheeseHotDogImg },
+  { id: 20, name: 'SMOKY SAUSAGE HOT DOG', price: 260, image: smokyHotDogImg },
 ]
 
 const showAll = ref<boolean>(false)
@@ -73,7 +87,7 @@ function toggleShowMore(): void {
       </svg>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
 
       <!-- Header -->
       <div class="text-center mb-14">
@@ -89,11 +103,11 @@ function toggleShowMore(): void {
         </p>
       </div>
 
-      <!-- Grid -->
+      <!-- Grid: 3 cols default → 5 cols expanded -->
       <div
-        class="grid gap-6 mb-10"
+        class="grid gap-5 mb-10 transition-all duration-500"
         :class="showAll
-          ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
+          ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'
           : 'grid-cols-1 md:grid-cols-3'"
       >
         <Transition
@@ -122,7 +136,7 @@ function toggleShowMore(): void {
             <!-- Info -->
             <div class="p-3 text-center transition-colors duration-300 bg-white/30 dark:bg-gray-700/30">
               <h3
-                class="font-bold tracking-[0.15em] mb-2 transition-colors duration-300
+                class="font-bold tracking-[0.12em] mb-2 transition-colors duration-300
                        text-coffee-dark dark:text-amber-400"
                 :class="showAll ? 'text-[9px]' : 'text-xs'"
               >
@@ -137,7 +151,7 @@ function toggleShowMore(): void {
                   LKR {{ pastry.price }}
                 </span>
                 <button
-                  class="hover:scale-125 transition-all text-gray-400 hover:text-amber-600"
+                  class="hover:scale-125 transition-all text-gray-400 hover:text-amber-600 dark:hover:text-amber-400"
                   :class="showAll ? 'text-sm' : 'text-lg'"
                   title="Add to cart"
                 >🛒</button>
@@ -147,7 +161,7 @@ function toggleShowMore(): void {
         </Transition>
       </div>
 
-      <!-- SEE MORE / SEE LESS -->
+      <!-- SEE MORE / SEE LESS Button -->
       <div class="text-center">
         <button
           @click="toggleShowMore"
