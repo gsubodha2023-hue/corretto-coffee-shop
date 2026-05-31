@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import footerLogoUrl from '../assets/footer-logo.png'
+import logo1 from '../assets/logo-sec-1.png'
+import logo2 from '../assets/logo-sec-2.png'
+import logo3 from '../assets/logo-sec-3.png'
+import logo4 from '../assets/logo-sec-4.png'
+import logo5 from '../assets/logo-sec-5.png'
 
 interface BrandLogo {
   name: string
@@ -7,11 +12,11 @@ interface BrandLogo {
 }
 
 const brandLogos: BrandLogo[] = [
-  { name: 'Café 1965',       image: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=200&q=80' },
-  { name: 'Coffee+',        image: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=200&q=80' },
-  { name: 'Coffee Town',    image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=200&q=80' },
-  { name: 'Coffee Estd',    image: 'https://images.unsplash.com/photo-1507133750040-4a8f57021571?w=200&q=80' },
-  { name: 'Coffee Masters', image: 'https://images.unsplash.com/photo-1521302200778-33500795e128?w=200&q=80' }
+  { name: 'Café 1965',       image: logo1 },
+  { name: 'Coffee+',         image: logo2 },
+  { name: 'Coffee Town',     image: logo3 },
+  { name: 'Coffee Estd',     image: logo4 },
+  { name: 'Coffee Masters',  image: logo5 }
 ]
 
 const socialLinks = [
@@ -69,30 +74,36 @@ const socialLinks = [
 <template>
   <footer>
 
-    <!-- Brand Logos Bar -->
+    <!-- ✅ Brand Logos Bar — using your 5 logo images -->
     <div class="bg-white border-t border-b border-gray-100 py-10">
       <div class="max-w-6xl mx-auto px-6">
         <div class="flex flex-wrap items-center justify-around gap-8">
-          <div v-for="brand in brandLogos" :key="brand.name"
-               class="flex flex-col items-center gap-2 group cursor-pointer">
-            <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-coffee-mid/20 group-hover:border-coffee-mid transition-all duration-300 shadow-sm group-hover:shadow-md">
-              <img :src="brand.image" :alt="brand.name"
-                   class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 grayscale group-hover:grayscale-0"/>
-            </div>
-            <span class="text-coffee-mid/60 group-hover:text-coffee-mid transition-colors text-[10px] font-bold tracking-[0.2em] uppercase">
-              {{ brand.name }}
-            </span>
+          <div
+            v-for="brand in brandLogos"
+            :key="brand.name"
+            class="cursor-pointer group"
+          >
+            <img
+              :src="brand.image"
+              :alt="brand.name"
+              class="h-14 w-auto object-contain
+                     opacity-70 group-hover:opacity-100
+                     grayscale group-hover:grayscale-0
+                     transition-all duration-300
+                     group-hover:scale-105"
+            />
           </div>
         </div>
       </div>
     </div>
 
     <!-- Main Footer (dark) -->
-    <div class="relative py-16 text-white text-center"
-         style="background: linear-gradient(rgba(0,0,0,0.88), rgba(0,0,0,0.92)),
-                url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80') center/cover no-repeat;">
-
-      <!-- Logo from assets -->
+    <div
+      class="relative py-16 text-white text-center"
+      style="background: linear-gradient(rgba(0,0,0,0.88), rgba(0,0,0,0.92)),
+             url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80') center/cover no-repeat;"
+    >
+      <!-- Logo -->
       <div class="flex items-center justify-center mb-6">
         <img :src="footerLogoUrl" alt="Corretto Coffee" class="h-16 w-auto object-contain"/>
       </div>
@@ -120,7 +131,7 @@ const socialLinks = [
         </div>
       </div>
 
-      <!-- ✅ Social Icons — FB, Email, WhatsApp, Call, Instagram -->
+      <!-- Social Icons -->
       <div class="flex items-center justify-center gap-4 mb-10">
         <a
           v-for="social in socialLinks"
@@ -128,7 +139,9 @@ const socialLinks = [
           :href="social.href"
           :title="social.label"
           :target="social.href.startsWith('http') ? '_blank' : '_self'"
-          class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-gray-400 transition-all duration-300 hover:text-white hover:border-transparent hover:scale-110"
+          class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center
+                 text-gray-400 transition-all duration-300
+                 hover:text-white hover:border-transparent hover:scale-110"
           :class="social.color"
           v-html="social.icon"
         />
