@@ -11,19 +11,32 @@ const { cartItems, removeFromCart, updateQuantity, clearCart, totalItems, totalP
 
 const formattedTotal = computed<string>(() => `LKR ${totalPrice.value.toLocaleString()}`)
 
-// Check if item is a coffee bag product from OnlineCoffeeShop
+// Check if item is a coffee bag (OnlineCoffeeShop)
 function isCoffeeBag(item: CartItem): boolean {
   return item.product.category === 'coffee-bag'
 }
 
-// Get label color stored in brand field
+// Check if item is a pastry (PastrySection) — has real thumbnail
+function isPastry(item: CartItem): boolean {
+  return item.product.category === 'pastry'
+}
+
+// Get label color for coffee bags
 function getBagColor(item: CartItem): string {
   return item.product.brand || '#8a6030'
 }
 
-// Get origin name from description
+// Get origin name for coffee bags
 function getBagOrigin(item: CartItem): string {
   return item.product.description?.split(' Roasted')[0] || item.product.title
+}
+
+// Format LKR price correctly
+function getLKRPrice(item: CartItem): string {
+  const lkr = item.product.category === 'coffee-bag' || item.product.category === 'pastry'
+    ? item.product.price * 320
+    : item.product.price * 320
+  return `LKR ${Math.round(lkr).toLocaleString()}`
 }
 </script>
 
@@ -62,54 +75,48 @@ function getBagOrigin(item: CartItem): string {
             <p class="text-sm tracking-wider">Your cart is empty</p>
           </div>
 
-          <!-- Cart items -->
+          <!-- Cart items loop -->
           <div v-for="item in cartItems" :key="item.product.id"
                class="flex gap-4 pb-4 border-b transition-colors duration-300
                       border-gray-100 dark:border-gray-700">
 
-            <!-- ===== COFFEE BAG MINI SVG (for OnlineCoffeeShop products) ===== -->
+            <!-- ===== COFFEE BAG SVG (OnlineCoffeeShop) ===== -->
             <div v-if="isCoffeeBag(item)" class="flex-shrink-0 w-16 h-16 flex items-center justify-center">
-              <svg width="48" height="64" viewBox="0 0 136 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="48" height="64" viewBox="0 0 136 260" fill="none">
                 <defs>
-                  <linearGradient :id="`cart_bg_${item.product.id}`" x1="0" y1="0" x2="1" y2="0">
+                  <linearGradient :id="`cb_${item.product.id}`" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stop-color="#7a5230"/>
-                    <stop offset="30%" stop-color="#bf8e55"/>
-                    <stop offset="60%" stop-color="#d4a96a"/>
+                    <stop offset="50%" stop-color="#d4a96a"/>
                     <stop offset="100%" stop-color="#7a5230"/>
                   </linearGradient>
-                  <linearGradient :id="`cart_tp_${item.product.id}`" x1="0" y1="0" x2="1" y2="0">
+                  <linearGradient :id="`ct_${item.product.id}`" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%" stop-color="#5a3a18"/>
                     <stop offset="50%" stop-color="#a87840"/>
                     <stop offset="100%" stop-color="#5a3a18"/>
                   </linearGradient>
                 </defs>
-                <!-- Bag top fold -->
-                <path d="M14 16 Q68 6 122 16 L124 52 Q68 42 12 52 Z" :fill="`url(#cart_tp_${item.product.id})`"/>
-                <!-- Bag body -->
-                <path d="M12 52 Q68 42 124 52 L128 248 Q68 258 8 248 Z" :fill="`url(#cart_bg_${item.product.id})`"/>
-                <!-- Side shadows -->
+                <path d="M14 16 Q68 6 122 16 L124 52 Q68 42 12 52 Z" :fill="`url(#ct_${item.product.id})`"/>
+                <path d="M12 52 Q68 42 124 52 L128 248 Q68 258 8 248 Z" :fill="`url(#cb_${item.product.id})`"/>
                 <path d="M12 52 L8 248" stroke="#5a3010" stroke-width="6" fill="none" opacity="0.25"/>
                 <path d="M124 52 L128 248" stroke="#5a3010" stroke-width="6" fill="none" opacity="0.25"/>
-                <!-- Bottom -->
                 <path d="M8 248 Q68 260 128 248 L126 258 Q68 268 10 258 Z" fill="#8a6030" opacity="0.7"/>
-                <!-- Colored label -->
                 <path d="M20 59 Q68 50 116 59 L113 90 Q68 98 23 90 Z" :fill="getBagColor(item)"/>
-                <!-- Origin text on label -->
-                <text x="68" y="78" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="14" fill="white" opacity="0.95">
-                  {{ getBagOrigin(item) }}
-                </text>
-                <!-- CORRETTO badge -->
-                <rect x="44" y="100" width="48" height="14" rx="1" fill="none" stroke="#8a5a20" stroke-width="1" opacity="0.6"/>
-                <text x="68" y="111" text-anchor="middle" font-family="Georgia,serif" font-size="6" fill="#4a2a00" letter-spacing="1.5" opacity="0.85">CORRETTO</text>
-                <!-- ROASTED COFFEE text -->
+                <text x="68" y="78" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="14" fill="white" opacity="0.95">{{ getBagOrigin(item) }}</text>
                 <text x="68" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="bold" fill="#3a1a00" opacity="0.85">ROASTED</text>
                 <text x="68" y="152" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="bold" fill="#3a1a00" opacity="0.85">COFFEE</text>
-                <!-- Subtitle -->
-                <text x="68" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="6" fill="#5a3010" letter-spacing="1" opacity="0.65">CHOCOLATE · CARAMEL · SPICE</text>
               </svg>
             </div>
 
-            <!-- ===== REGULAR PRODUCT IMAGE (for other products) ===== -->
+            <!-- ===== PASTRY / FOOD REAL PHOTO ===== -->
+            <div v-else-if="isPastry(item)" class="flex-shrink-0 w-16 h-16 overflow-hidden rounded-sm border border-coffee-mid/20">
+              <img
+                :src="item.product.thumbnail"
+                :alt="item.product.title"
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            <!-- ===== REGULAR PRODUCT IMAGE (API products) ===== -->
             <img
               v-else
               :src="item.product.thumbnail"
@@ -124,7 +131,7 @@ function getBagOrigin(item: CartItem): string {
                 {{ item.product.title }}
               </div>
               <div class="text-xs mt-1 transition-colors duration-300 text-gray-500 dark:text-gray-400">
-                LKR {{ (item.product.price * 320).toLocaleString() }}
+                {{ getLKRPrice(item) }}
               </div>
               <!-- Quantity controls -->
               <div class="flex items-center gap-2 mt-2">
@@ -140,6 +147,10 @@ function getBagOrigin(item: CartItem): string {
                                border-gray-300 dark:border-gray-600
                                text-gray-700 dark:text-gray-300
                                hover:border-amber-500 hover:text-amber-600">+</button>
+                <!-- Subtotal for this item -->
+                <span class="text-xs text-amber-600 dark:text-amber-400 ml-1 font-semibold">
+                  × {{ item.quantity }}
+                </span>
               </div>
             </div>
 

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useCart } from '../composables/useCart'
+import type { Product } from '../types'
 import seafoodImg         from '../assets/seafoodPastry.png'
 import chickenImg         from '../assets/chickenPastry.png'
 import chocolateCroissant from '../assets/Chocolate_Croissant.jpg'
@@ -16,6 +18,8 @@ import fireGrillImg       from '../assets/Fire_Grill_Burger.png'
 import cheeseHotDogImg    from '../assets/Cheese_HotDog.png'
 import smokyHotDogImg     from '../assets/Smoky_Sausage_HotDog.png'
 
+const { addToCart } = useCart()
+
 interface PastryItem {
   id: number
   name: string
@@ -24,27 +28,51 @@ interface PastryItem {
 }
 
 const allPastries: PastryItem[] = [
-  { id: 1,  name: 'SEAFOOD PASTRY',        price: 220, image: seafoodImg },
-  { id: 2,  name: 'CHICKEN PASTRY',        price: 180, image: chickenImg },
-  { id: 3,  name: 'LAVA CAKE',             price: 200, image: 'https://images.unsplash.com/photo-1617305855058-336d24456869?w=600&q=90' },
-  { id: 4,  name: 'CHOCOLATE CROISSANT',   price: 160, image: chocolateCroissant },
-  { id: 5,  name: 'BLUEBERRY MUFFIN',      price: 140, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=90' },
-  { id: 6,  name: 'CINNAMON ROLL',         price: 170, image: cinnamonRoll },
-  { id: 7,  name: 'APPLE TURNOVER',        price: 175, image: appleTurnover },
-  { id: 8,  name: 'BANANA BREAD',          price: 165, image: bananaBreadImg },
-  { id: 9,  name: 'ÉCLAIR',               price: 195, image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=90' },
-  { id: 10, name: 'MACARON',               price: 150, image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=90' },
-  { id: 11, name: 'TIRAMISU',              price: 250, image: tiramisuImg },
-  { id: 12, name: 'BUTTER CROISSANT',      price: 155, image: butterCroissant },
-  { id: 13, name: 'STRAWBERRY TART',       price: 210, image: 'https://images.unsplash.com/photo-1587248720327-8eb72564be1e?w=600&q=90' },
-  { id: 14, name: 'CHEESE CAKE',           price: 230, image: cheeseCakeImg },
-  { id: 15, name: 'CHOCOLATE CAKE',        price: 280, image: chocolateCakeImg },
-  { id: 16, name: 'MARGHERITA PIZZA',      price: 350, image: margheritaImg },
-  { id: 17, name: 'DOUBLE CHICKEN BURGER', price: 420, image: chickenBurgerImg },
-  { id: 18, name: 'FIRE GRILL BURGER',     price: 390, image: fireGrillImg },
-  { id: 19, name: 'CHEESE HOT DOG',        price: 280, image: cheeseHotDogImg },
-  { id: 20, name: 'SMOKY SAUSAGE HOT DOG', price: 260, image: smokyHotDogImg },
+  { id: 201, name: 'SEAFOOD PASTRY',        price: 220, image: seafoodImg },
+  { id: 202, name: 'CHICKEN PASTRY',        price: 180, image: chickenImg },
+  { id: 203, name: 'LAVA CAKE',             price: 200, image: 'https://images.unsplash.com/photo-1617305855058-336d24456869?w=600&q=90' },
+  { id: 204, name: 'CHOCOLATE CROISSANT',   price: 160, image: chocolateCroissant },
+  { id: 205, name: 'BLUEBERRY MUFFIN',      price: 140, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=90' },
+  { id: 206, name: 'CINNAMON ROLL',         price: 170, image: cinnamonRoll },
+  { id: 207, name: 'APPLE TURNOVER',        price: 175, image: appleTurnover },
+  { id: 208, name: 'BANANA BREAD',          price: 165, image: bananaBreadImg },
+  { id: 209, name: 'ÉCLAIR',               price: 195, image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=90' },
+  { id: 210, name: 'MACARON',               price: 150, image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=90' },
+  { id: 211, name: 'TIRAMISU',              price: 250, image: tiramisuImg },
+  { id: 212, name: 'BUTTER CROISSANT',      price: 155, image: butterCroissant },
+  { id: 213, name: 'STRAWBERRY TART',       price: 210, image: 'https://images.unsplash.com/photo-1587248720327-8eb72564be1e?w=600&q=90' },
+  { id: 214, name: 'CHEESE CAKE',           price: 230, image: cheeseCakeImg },
+  { id: 215, name: 'CHOCOLATE CAKE',        price: 280, image: chocolateCakeImg },
+  { id: 216, name: 'MARGHERITA PIZZA',      price: 350, image: margheritaImg },
+  { id: 217, name: 'DOUBLE CHICKEN BURGER', price: 420, image: chickenBurgerImg },
+  { id: 218, name: 'FIRE GRILL BURGER',     price: 390, image: fireGrillImg },
+  { id: 219, name: 'CHEESE HOT DOG',        price: 280, image: cheeseHotDogImg },
+  { id: 220, name: 'SMOKY SAUSAGE HOT DOG', price: 260, image: smokyHotDogImg },
 ]
+
+// Track added animation per item
+const addedId = ref<number | null>(null)
+
+function handleAddToCart(pastry: PastryItem): void {
+  const cartProduct: Product = {
+    id: pastry.id,
+    title: pastry.name,
+    price: pastry.price / 320,       // convert LKR to USD for cart consistency
+    description: `Fresh ${pastry.name} from Corretto Coffee Shop`,
+    category: 'pastry',              // ← category flag for CartSidebar
+    thumbnail: pastry.image,         // ← real photo shown in cart
+    images: [pastry.image],
+    rating: 4.7,
+    stock: 30,
+    brand: pastry.image,             // ← store image again for cart display
+    discountPercentage: 0
+  }
+  addToCart(cartProduct)
+
+  // Show green ✓ animation
+  addedId.value = pastry.id
+  setTimeout(() => { addedId.value = null }, 1500)
+}
 
 const showAll = ref<boolean>(false)
 
@@ -103,7 +131,7 @@ function toggleShowMore(): void {
         </p>
       </div>
 
-      <!-- Grid: 3 cols default → 5 cols expanded -->
+      <!-- Grid -->
       <div
         class="grid gap-5 mb-10 transition-all duration-500"
         :class="showAll
@@ -142,7 +170,9 @@ function toggleShowMore(): void {
               >
                 {{ pastry.name }}
               </h3>
-              <div class="flex items-center justify-center gap-2">
+
+              <div class="flex items-center justify-center gap-3">
+                <!-- Price -->
                 <span
                   class="font-semibold transition-colors duration-300
                          text-gray-700 dark:text-gray-300"
@@ -150,18 +180,68 @@ function toggleShowMore(): void {
                 >
                   LKR {{ pastry.price }}
                 </span>
+
+                <!-- ✅ WORKING CART BUTTON -->
                 <button
-                  class="hover:scale-125 transition-all text-gray-400 hover:text-amber-600 dark:hover:text-amber-400"
-                  :class="showAll ? 'text-sm' : 'text-lg'"
-                  title="Add to cart"
-                >🛒</button>
+                  @click="handleAddToCart(pastry)"
+                  :title="`Add ${pastry.name} to cart`"
+                  class="rounded-full flex items-center justify-center transition-all duration-300 shadow-sm flex-shrink-0"
+                  :class="[
+                    showAll ? 'w-7 h-7' : 'w-9 h-9',
+                    addedId === pastry.id
+                      ? 'bg-green-500 scale-110'
+                      : 'bg-coffee-dark dark:bg-amber-600 hover:bg-amber-600 dark:hover:bg-amber-500 hover:scale-110'
+                  ]"
+                >
+                  <!-- Cart icon -->
+                  <svg
+                    v-if="addedId !== pastry.id"
+                    xmlns="http://www.w3.org/2000/svg"
+                    :width="showAll ? '13' : '16'"
+                    :height="showAll ? '13' : '16'"
+                    viewBox="0 0 24 24"
+                    fill="none" stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="9"  cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                  </svg>
+                  <!-- Checkmark when added -->
+                  <svg
+                    v-else
+                    xmlns="http://www.w3.org/2000/svg"
+                    :width="showAll ? '13' : '16'"
+                    :height="showAll ? '13' : '16'"
+                    viewBox="0 0 24 24"
+                    fill="none" stroke="white"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </button>
               </div>
+
+              <!-- Added confirmation text -->
+              <Transition name="pop">
+                <p
+                  v-if="addedId === pastry.id"
+                  class="text-green-500 font-bold mt-1 tracking-wider"
+                  :class="showAll ? 'text-[9px]' : 'text-xs'"
+                >
+                  ✓ Added!
+                </p>
+              </Transition>
             </div>
           </div>
         </Transition>
       </div>
 
-      <!-- SEE MORE / SEE LESS Button -->
+      <!-- SEE MORE / SEE LESS -->
       <div class="text-center">
         <button
           @click="toggleShowMore"
@@ -190,4 +270,7 @@ function toggleShowMore(): void {
 <style scoped>
 .card-fade-enter-active { transition: all 0.4s ease; }
 .card-fade-enter-from   { opacity: 0; transform: translateY(20px); }
+.pop-enter-active { transition: all 0.3s ease; }
+.pop-leave-active { transition: all 0.3s ease; }
+.pop-enter-from, .pop-leave-to { transform: translateY(-5px); opacity: 0; }
 </style>
