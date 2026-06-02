@@ -1,151 +1,376 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
-import { useProducts } from '../composables/useProducts'
-import ProductCard from './ProductCard.vue'
-import ProductModal from './ProductModal.vue'
+import { ref, computed } from 'vue'
+import { useCart } from '../composables/useCart'
 import type { Product } from '../types'
 
-const props = defineProps<{ searchQuery?: string }>()
+const { addToCart } = useCart()
 
-const { products, loading, error, fetchProducts } = useProducts()
-const selectedProduct = ref<Product | null>(null)
-const showModal       = ref<boolean>(false)
-const skip            = ref<number>(0)
-const LIMIT           = 8
-const localSearch     = ref<string>(props.searchQuery || '')
-
-async function load(): Promise<void> {
-  await fetchProducts(LIMIT, skip.value, localSearch.value)
+interface ShopItem {
+  id: number
+  name: string
+  price: number
+  image: string
+  category: string
+  tag: string
+  tagColor: string
 }
 
-async function loadMore(): Promise<void> {
-  skip.value += LIMIT
-  await fetchProducts(LIMIT, skip.value, localSearch.value)
-}
+const allItems: ShopItem[] = [
+  // ☕ HOT COFFEES — Dine-in ONLY (8 items)
+  {
+    id: 301, name: 'CAPPUCCINO MILK COFFEE', price: 720,
+    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=85',
+    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+  },
+  {
+    id: 302, name: 'FLAT WHITE MILK COFFEE', price: 680,
+    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=400&q=85',
+    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+  },
+  {
+    id: 303, name: 'LATTE MACCHIATO', price: 750,
+    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=85',
+    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+  },
+  {
+    id: 304, name: 'BLACK SRI LANKAN COFFEE', price: 650,
+    image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400&q=85',
+    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+  },
+  {
+    id: 305, name: 'BLACK ENGLAND COFFEE', price: 730,
+    image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=85',
+    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+  },
+  {
+    id: 306, name: 'WHITE CHOCO COFFEE', price: 780,
+    image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&q=85',
+    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+  },
+  {
+    id: 307, name: 'LATTE BROWN COFFEE', price: 680,
+    image: 'https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?w=400&q=85',
+    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+  },
+  {
+    id: 308, name: 'ESPRESSO CLASSIC', price: 600,
+    image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&q=85',
+    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+  },
+  // 🧊 ICE COFFEES — Dine-in, Takeaway & Delivery (8 items)
+  {
+    id: 309, name: 'ICE LATTE MILK COFFEE', price: 550,
+    image: 'https://images.unsplash.com/photo-1517959105821-eaf2591984ca?w=400&q=85',
+    category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
+  },
+  {
+    id: 310, name: 'COLD BREW SPECIAL', price: 850,
+    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=85',
+    category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
+  },
+  {
+    id: 311, name: 'ICED AMERICANO', price: 620,
+    image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=85',
+    category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
+  },
+  {
+    id: 312, name: 'ICED CAPPUCCINO', price: 750,
+    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=85',
+    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+  },
+  {
+    id: 313, name: 'FRAPPUCCINO', price: 900,
+    image: 'https://images.unsplash.com/photo-1578301978162-7aae4d755744?w=400&q=85',
+    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+  },
+  {
+    id: 314, name: 'ICED MOCHA', price: 820,
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=85',
+    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+  },
+  {
+    id: 315, name: 'ICED CARAMEL LATTE', price: 880,
+    image: 'https://images.unsplash.com/photo-1529892485617-25f63cd7b1e9?w=400&q=85',
+    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+  },
+  {
+    id: 316, name: 'ICED MATCHA LATTE', price: 950,
+    image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=85',
+    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+  },
+  // 🥤 POCKET CUPS — Takeaway & Delivery (4 items)
+  {
+    id: 317, name: 'POCKET AMERICANO', price: 480,
+    image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&q=85',
+    category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
+  },
+  {
+    id: 318, name: 'POCKET LATTE', price: 520,
+    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=85',
+    category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
+  },
+  {
+    id: 319, name: 'POCKET CAPPUCCINO', price: 560,
+    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=85',
+    category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
+  },
+  {
+    id: 320, name: 'POCKET MOCHA', price: 590,
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=85',
+    category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
+  },
+  // 🍶 MILK BOTTLES — Takeaway & Delivery (4 items)
+  {
+    id: 321, name: 'MILK COFFEE BOTTLE', price: 650,
+    image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&q=85',
+    category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
+  },
+  {
+    id: 322, name: 'CARAMEL MILK BOTTLE', price: 720,
+    image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=400&q=85',
+    category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
+  },
+  {
+    id: 323, name: 'VANILLA MILK BOTTLE', price: 700,
+    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=85',
+    category: 'bottle', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-purple-600'
+  },
+  {
+    id: 324, name: 'CHOCO MILK BOTTLE', price: 750,
+    image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=400&q=85',
+    category: 'bottle', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-purple-600'
+  },
+]
 
-function openModal(product: Product): void {
-  selectedProduct.value = product
-  showModal.value = true
-}
+// Filter tabs
+const activeFilter = ref<string>('all')
+const filters = [
+  { key: 'all',    label: 'ALL (24)' },
+  { key: 'hot',    label: '☕ HOT' },
+  { key: 'ice',    label: '🧊 ICE' },
+  { key: 'pocket', label: '🥤 POCKET' },
+  { key: 'bottle', label: '🍶 BOTTLE' },
+]
 
-function closeModal(): void {
-  showModal.value = false
-  selectedProduct.value = null
-}
+// Show more state — start with 8
+const showAll  = ref<boolean>(false)
+const INITIAL  = 8
 
-watch(() => props.searchQuery, (newQ) => {
-  if (newQ !== undefined) {
-    localSearch.value = newQ
-    skip.value = 0
-    load()
+const filteredItems = computed<ShopItem[]>(() =>
+  activeFilter.value === 'all'
+    ? allItems
+    : allItems.filter(i => i.category === activeFilter.value)
+)
+
+const displayedItems = computed<ShopItem[]>(() =>
+  showAll.value ? filteredItems.value : filteredItems.value.slice(0, INITIAL)
+)
+
+const hasMore = computed<boolean>(() =>
+  filteredItems.value.length > INITIAL && !showAll.value
+)
+
+function toggleShowMore(): void {
+  showAll.value = !showAll.value
+  if (!showAll.value) {
+    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })
   }
-})
+}
 
-onMounted(() => load())
+// Reset showAll when filter changes
+function setFilter(key: string): void {
+  activeFilter.value = key
+  showAll.value = false
+}
+
+// Cart
+const addedId = ref<number | null>(null)
+
+function handleAddToCart(item: ShopItem): void {
+  const product: Product = {
+    id: item.id,
+    title: item.name,
+    price: item.price / 320,
+    description: `${item.tag} — ${item.name}`,
+    category: 'shop-coffee',
+    thumbnail: item.image,
+    images: [item.image],
+    rating: 4.8,
+    stock: 50,
+    brand: item.tag,
+    discountPercentage: 0
+  }
+  addToCart(product)
+  addedId.value = item.id
+  setTimeout(() => { addedId.value = null }, 1500)
+}
 </script>
 
 <template>
-  <section id="shop" class="py-24 transition-colors duration-300
-                             bg-white dark:bg-gray-900">
+  <section id="shop" class="py-24 transition-colors duration-300 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-6">
 
       <!-- Header -->
-      <div class="text-center mb-4">
+      <div class="text-center mb-6">
         <h2 class="text-4xl font-bold tracking-[0.2em] mb-3 transition-colors duration-300
                    text-gray-900 dark:text-white"
             style="font-family:'Playfair Display',Georgia,serif;">
           AVAILABLE IN SHOP
         </h2>
-        <p class="text-sm mb-8 transition-colors duration-300
-                  text-gray-400 dark:text-gray-500">
+        <p class="text-sm mb-6 transition-colors duration-300 text-gray-400 dark:text-gray-500">
           Best product · Fresh vibe · Relax time · Enjoy life with Coffee.
         </p>
-      </div>
 
-      <!-- Search Bar -->
-      <div class="flex justify-center mb-10">
-        <div class="flex gap-3 w-full max-w-md">
-          <input
-            v-model="localSearch"
-            @keyup.enter="() => { skip = 0; load() }"
-            type="text"
-            placeholder="Search products..."
-            class="flex-1 px-4 py-2 text-sm outline-none rounded transition-colors duration-300
-                   border border-gray-200 dark:border-gray-700
-                   bg-white dark:bg-gray-800
-                   text-gray-900 dark:text-white
-                   placeholder-gray-400 dark:placeholder-gray-500
-                   focus:ring-1 focus:ring-amber-400"
-          />
-          <button
-            @click="() => { skip = 0; load() }"
-            class="px-5 py-2 text-xs tracking-widest rounded transition-colors
-                   bg-coffee-dark dark:bg-amber-600 text-white
-                   hover:bg-amber-700"
-          >
-            SEARCH
-          </button>
-          <button
-            v-if="localSearch"
-            @click="() => { localSearch = ''; skip = 0; load() }"
-            class="border px-3 py-2 text-xs rounded transition-colors
-                   border-gray-300 dark:border-gray-600
-                   hover:bg-gray-50 dark:hover:bg-gray-800
-                   text-gray-700 dark:text-gray-300"
-          >
-            ✕
-          </button>
+        <!-- Service legend -->
+        <div class="flex flex-wrap justify-center gap-3 mb-6">
+          <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-amber-700 px-3 py-1 rounded-full">
+            ☕ HOT — DINE-IN ONLY
+          </span>
+          <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-blue-600 px-3 py-1 rounded-full">
+            🧊 ICE — DINE-IN & TAKEAWAY
+          </span>
+          <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-teal-600 px-3 py-1 rounded-full">
+            🚚 ICE — DELIVERY AVAILABLE
+          </span>
+          <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-orange-600 px-3 py-1 rounded-full">
+            🥤 POCKET CUP — TAKEAWAY & DELIVERY
+          </span>
+          <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-purple-600 px-3 py-1 rounded-full">
+            🍶 MILK BOTTLE — TAKEAWAY & DELIVERY
+          </span>
         </div>
       </div>
 
-      <!-- Loading -->
-      <div v-if="loading" class="text-center py-20">
-        <div class="text-4xl animate-spin inline-block">☕</div>
-        <p class="text-sm mt-4 tracking-wider text-gray-400 dark:text-gray-500">
-          Brewing your results...
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        <button
+          v-for="f in filters"
+          :key="f.key"
+          @click="setFilter(f.key)"
+          class="px-4 py-2 text-xs font-bold tracking-wider rounded-full border transition-all duration-200"
+          :class="activeFilter === f.key
+            ? 'bg-coffee-dark dark:bg-amber-600 text-white border-coffee-dark dark:border-amber-600 scale-105'
+            : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400'"
+        >
+          {{ f.label }}
+        </button>
+      </div>
+
+      <!-- Items Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <Transition
+          v-for="item in displayedItems"
+          :key="item.id"
+          name="card-fade"
+          appear
+        >
+          <div
+            class="group border transition-all duration-300 hover:shadow-md
+                   border-gray-200 dark:border-gray-700
+                   bg-white dark:bg-gray-800"
+          >
+            <!-- Image -->
+            <div class="overflow-hidden relative">
+              <img
+                :src="item.image"
+                :alt="item.name"
+                class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <!-- Tag badge -->
+              <span
+                class="absolute top-2 left-2 text-white text-[9px] font-bold tracking-wide px-2 py-0.5 rounded-sm leading-tight"
+                :class="item.tagColor"
+              >
+                {{ item.tag }}
+              </span>
+            </div>
+
+            <!-- Info -->
+            <div class="p-3 text-center">
+              <h3 class="font-bold text-[11px] tracking-[0.12em] mb-2 uppercase transition-colors duration-300
+                         text-coffee-dark dark:text-amber-400 leading-tight">
+                {{ item.name }}
+              </h3>
+
+              <div class="flex items-center justify-center gap-3">
+                <span class="text-sm font-semibold transition-colors duration-300
+                             text-gray-700 dark:text-gray-300">
+                  LKR {{ item.price }}
+                </span>
+
+                <!-- Working Cart Button -->
+                <button
+                  @click="handleAddToCart(item)"
+                  :title="`Add ${item.name} to cart`"
+                  class="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm flex-shrink-0"
+                  :class="addedId === item.id
+                    ? 'bg-green-500 scale-110'
+                    : 'bg-coffee-dark dark:bg-amber-600 hover:bg-amber-600 dark:hover:bg-amber-500 hover:scale-110'"
+                >
+                  <!-- Cart icon -->
+                  <svg v-if="addedId !== item.id"
+                       xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                       viewBox="0 0 24 24" fill="none" stroke="white"
+                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9"  cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                  </svg>
+                  <!-- Checkmark when added -->
+                  <svg v-else
+                       xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                       viewBox="0 0 24 24" fill="none" stroke="white"
+                       stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Added confirmation -->
+              <Transition name="pop">
+                <p v-if="addedId === item.id"
+                   class="text-green-500 text-xs font-bold mt-1 tracking-wider">
+                  ✓ Added to Cart!
+                </p>
+              </Transition>
+            </div>
+          </div>
+        </Transition>
+      </div>
+
+      <!-- SEE MORE / SEE LESS Button -->
+      <div class="text-center mt-10">
+        <button
+          v-if="filteredItems.length > INITIAL"
+          @click="toggleShowMore"
+          class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.3em]
+                 transition-all duration-300 group
+                 text-gray-800 dark:text-gray-300
+                 hover:text-amber-700 dark:hover:text-amber-400"
+        >
+          {{ showAll ? 'SEE LESS' : 'SEE MORE' }}
+          <span
+            class="inline-flex items-center justify-center w-6 h-6 rounded-full border border-current
+                   text-xs transition-all
+                   group-hover:bg-amber-700 group-hover:border-amber-700 group-hover:text-white"
+            :style="showAll ? 'transform:rotate(180deg)' : 'transform:rotate(0deg)'"
+          >→</span>
+        </button>
+
+        <!-- Count -->
+        <p class="text-xs text-gray-400 dark:text-gray-600 mt-3 tracking-wider">
+          Showing {{ displayedItems.length }} of {{ filteredItems.length }} items
         </p>
       </div>
 
-      <!-- Error -->
-      <div v-else-if="error" class="text-center py-20 text-red-500 text-sm">
-        {{ error }}
-        <button @click="load" class="ml-3 underline">Retry</button>
-      </div>
-
-      <!-- Products Grid -->
-      <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <ProductCard
-          v-for="(product, idx) in products"
-          :key="product.id"
-          :product="product"
-          :index="idx"
-          @viewDetail="openModal"
-        />
-      </div>
-
-      <!-- Empty State -->
-      <div v-if="!loading && products.length === 0"
-           class="text-center py-20 text-gray-400 dark:text-gray-600">
-        No products found for "{{ localSearch }}"
-      </div>
-
-      <!-- SEE MORE -->
-      <div v-if="!loading && products.length > 0" class="text-center mt-12">
-        <button
-          @click="loadMore"
-          class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.3em] transition-colors
-                 text-gray-700 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-400"
-        >
-          SEE MORE <span>→</span>
-        </button>
-      </div>
     </div>
-
-    <!-- Modal -->
-    <ProductModal
-      v-if="showModal && selectedProduct"
-      :product="selectedProduct"
-      @close="closeModal"
-    />
   </section>
 </template>
+
+<style scoped>
+.card-fade-enter-active { transition: all 0.4s ease; }
+.card-fade-enter-from   { opacity: 0; transform: translateY(16px); }
+.pop-enter-active, .pop-leave-active { transition: all 0.3s ease; }
+.pop-enter-from, .pop-leave-to { transform: translateY(-5px); opacity: 0; }
+</style>
