@@ -20,34 +20,48 @@ import smokyHotDogImg     from '../assets/Smoky_Sausage_HotDog.png'
 
 const { addToCart } = useCart()
 
+const PASTRY_SERVICE_TAG = 'DINE-IN, TAKEAWAY & DELIVERY'
+const PASTRY_SERVICE_TAG_COLOR = 'bg-rose-700'
+
 interface PastryItem {
   id: number
   name: string
   price: number
   image: string
+  category: 'pastry' | 'cake' | 'food'
 }
 
 const allPastries: PastryItem[] = [
-  { id: 201, name: 'SEAFOOD PASTRY',        price: 220, image: seafoodImg },
-  { id: 202, name: 'CHICKEN PASTRY',        price: 180, image: chickenImg },
-  { id: 203, name: 'LAVA CAKE',             price: 200, image: 'https://images.unsplash.com/photo-1617305855058-336d24456869?w=600&q=90' },
-  { id: 204, name: 'CHOCOLATE CROISSANT',   price: 160, image: chocolateCroissant },
-  { id: 205, name: 'BLUEBERRY MUFFIN',      price: 140, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=90' },
-  { id: 206, name: 'CINNAMON ROLL',         price: 170, image: cinnamonRoll },
-  { id: 207, name: 'APPLE TURNOVER',        price: 175, image: appleTurnover },
-  { id: 208, name: 'BANANA BREAD',          price: 165, image: bananaBreadImg },
-  { id: 209, name: 'ÉCLAIR',               price: 195, image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=90' },
-  { id: 210, name: 'MACARON',               price: 150, image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=90' },
-  { id: 211, name: 'TIRAMISU',              price: 250, image: tiramisuImg },
-  { id: 212, name: 'BUTTER CROISSANT',      price: 155, image: butterCroissant },
-  { id: 213, name: 'STRAWBERRY TART',       price: 210, image: 'https://images.unsplash.com/photo-1587248720327-8eb72564be1e?w=600&q=90' },
-  { id: 214, name: 'CHEESE CAKE',           price: 230, image: cheeseCakeImg },
-  { id: 215, name: 'CHOCOLATE CAKE',        price: 280, image: chocolateCakeImg },
-  { id: 216, name: 'MARGHERITA PIZZA',      price: 350, image: margheritaImg },
-  { id: 217, name: 'DOUBLE CHICKEN BURGER', price: 420, image: chickenBurgerImg },
-  { id: 218, name: 'FIRE GRILL BURGER',     price: 390, image: fireGrillImg },
-  { id: 219, name: 'CHEESE HOT DOG',        price: 280, image: cheeseHotDogImg },
-  { id: 220, name: 'SMOKY SAUSAGE HOT DOG', price: 260, image: smokyHotDogImg },
+  { id: 201, name: 'SEAFOOD PASTRY',        price: 220, image: seafoodImg,         category: 'pastry' },
+  { id: 202, name: 'CHICKEN PASTRY',        price: 180, image: chickenImg,         category: 'pastry' },
+  { id: 203, name: 'LAVA CAKE',             price: 200, image: 'https://images.unsplash.com/photo-1617305855058-336d24456869?w=600&q=90', category: 'cake' },
+  { id: 204, name: 'CHOCOLATE CROISSANT',   price: 160, image: chocolateCroissant, category: 'pastry' },
+  { id: 205, name: 'BLUEBERRY MUFFIN',      price: 140, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=90', category: 'pastry' },
+  { id: 206, name: 'CINNAMON ROLL',         price: 170, image: cinnamonRoll,       category: 'pastry' },
+  { id: 207, name: 'APPLE TURNOVER',        price: 175, image: appleTurnover,      category: 'pastry' },
+  { id: 208, name: 'BANANA BREAD',          price: 165, image: bananaBreadImg,     category: 'pastry' },
+  { id: 209, name: 'ÉCLAIR',               price: 195, image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=90', category: 'pastry' },
+  { id: 210, name: 'MACARON',               price: 150, image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=90', category: 'pastry' },
+  { id: 211, name: 'TIRAMISU',              price: 250, image: tiramisuImg,        category: 'cake' },
+  { id: 212, name: 'BUTTER CROISSANT',      price: 155, image: butterCroissant,    category: 'pastry' },
+  { id: 213, name: 'STRAWBERRY TART',       price: 210, image: 'https://images.unsplash.com/photo-1587248720327-8eb72564be1e?w=600&q=90', category: 'pastry' },
+  { id: 214, name: 'CHEESE CAKE',           price: 230, image: cheeseCakeImg,      category: 'cake' },
+  { id: 215, name: 'CHOCOLATE CAKE',        price: 280, image: chocolateCakeImg,   category: 'cake' },
+  { id: 216, name: 'MARGHERITA PIZZA',      price: 350, image: margheritaImg,      category: 'food' },
+  { id: 217, name: 'DOUBLE CHICKEN BURGER', price: 420, image: chickenBurgerImg,   category: 'food' },
+  { id: 218, name: 'FIRE GRILL BURGER',     price: 390, image: fireGrillImg,       category: 'food' },
+  { id: 219, name: 'CHEESE HOT DOG',        price: 280, image: cheeseHotDogImg,    category: 'food' },
+  { id: 220, name: 'SMOKY SAUSAGE HOT DOG', price: 260, image: smokyHotDogImg,     category: 'food' },
+]
+
+const pastryCount = allPastries.filter(i => i.category === 'pastry').length
+const cakeCount   = allPastries.filter(i => i.category === 'cake').length
+
+const activeFilter = ref<string>('all')
+const filters = [
+  { key: 'all',    label: `ALL (${allPastries.length})` },
+  { key: 'pastry', label: `🥐 PASTRY (${pastryCount})` },
+  { key: 'cake',   label: `🎂 CAKE (${cakeCount})` },
 ]
 
 // Track added animation per item
@@ -58,7 +72,7 @@ function handleAddToCart(pastry: PastryItem): void {
     id: pastry.id,
     title: pastry.name,
     price: pastry.price / 320,       // convert LKR to USD for cart consistency
-    description: `Fresh ${pastry.name} from Corretto Coffee Shop`,
+    description: `${PASTRY_SERVICE_TAG} — ${pastry.name}`,
     category: 'pastry',              // ← category flag for CartSidebar
     thumbnail: pastry.image,         // ← real photo shown in cart
     images: [pastry.image],
@@ -75,10 +89,22 @@ function handleAddToCart(pastry: PastryItem): void {
 }
 
 const showAll = ref<boolean>(false)
+const INITIAL = 3
+
+const filteredPastries = computed<PastryItem[]>(() =>
+  activeFilter.value === 'all'
+    ? allPastries
+    : allPastries.filter(i => i.category === activeFilter.value)
+)
 
 const displayedPastries = computed<PastryItem[]>(() =>
-  showAll.value ? allPastries : allPastries.slice(0, 3)
+  showAll.value ? filteredPastries.value : filteredPastries.value.slice(0, INITIAL)
 )
+
+function setFilter(key: string): void {
+  activeFilter.value = key
+  showAll.value = false
+}
 
 function toggleShowMore(): void {
   showAll.value = !showAll.value
@@ -129,6 +155,29 @@ function toggleShowMore(): void {
           A gallery showcasing fresh pastries, rich coffee, cozy ambiance, and customer moments
           to inspire visitors and highlight our café offerings.
         </p>
+        <div class="flex flex-wrap justify-center gap-3 mt-6">
+          <span
+            class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white px-3 py-1 rounded-full"
+            :class="PASTRY_SERVICE_TAG_COLOR"
+          >
+            🥐 PASTRY & CAKE — {{ PASTRY_SERVICE_TAG }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        <button
+          v-for="f in filters"
+          :key="f.key"
+          @click="setFilter(f.key)"
+          class="px-4 py-2 text-xs font-bold tracking-wider rounded-full border transition-all duration-200"
+          :class="activeFilter === f.key
+            ? 'bg-coffee-dark dark:bg-amber-600 text-white border-coffee-dark dark:border-amber-600 scale-105'
+            : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-amber-500 hover:text-amber-600 dark:hover:text-amber-400'"
+        >
+          {{ f.label }}
+        </button>
       </div>
 
       <!-- Grid -->
@@ -158,6 +207,12 @@ function toggleShowMore(): void {
                 :class="showAll ? 'h-36' : 'h-60'"
                 loading="lazy"
               />
+              <span
+                class="absolute top-2 left-2 text-white text-[9px] font-bold tracking-wide px-2 py-0.5 rounded-sm leading-tight"
+                :class="PASTRY_SERVICE_TAG_COLOR"
+              >
+                {{ PASTRY_SERVICE_TAG }}
+              </span>
               <div class="absolute inset-0 bg-amber-900/0 group-hover:bg-amber-900/10 transition-all duration-300"/>
             </div>
 
@@ -244,6 +299,7 @@ function toggleShowMore(): void {
       <!-- SEE MORE / SEE LESS -->
       <div class="text-center">
         <button
+          v-if="filteredPastries.length > INITIAL"
           @click="toggleShowMore"
           class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.3em]
                  transition-all duration-300 group
@@ -259,7 +315,7 @@ function toggleShowMore(): void {
           >→</span>
         </button>
         <p class="text-xs text-gray-400 dark:text-gray-600 mt-3 tracking-wider">
-          Showing {{ displayedPastries.length }} of {{ allPastries.length }} items
+          Showing {{ displayedPastries.length }} of {{ filteredPastries.length }} items
         </p>
       </div>
 

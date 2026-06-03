@@ -93,42 +93,42 @@ const allItems: ShopItem[] = [
   {
     id: 309, name: 'ICE LATTE MILK COFFEE', price: 550,
     image: iceLatteMilkImg,
-    category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
+    category: 'ice', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-teal-600'
   },
   {
     id: 310, name: 'COLD BREW SPECIAL', price: 850,
     image: coldBrewSpecialImg,
-    category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
+    category: 'ice', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-teal-600'
   },
   {
     id: 311, name: 'ICED AMERICANO', price: 620,
     image: icedAmericanoImg,
-    category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
+    category: 'ice', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-teal-600'
   },
   {
     id: 312, name: 'ICED CAPPUCCINO', price: 750,
     image: icedCappuccinoImg,
-    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+    category: 'ice', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-teal-600'
   },
   {
     id: 313, name: 'FRAPPUCCINO', price: 900,
     image: frappuccinoImg,
-    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+    category: 'ice', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-teal-600'
   },
   {
     id: 314, name: 'ICED MOCHA', price: 820,
     image: icedMochaImg,
-    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+    category: 'ice', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-teal-600'
   },
   {
     id: 315, name: 'ICED CARAMEL LATTE', price: 880,
     image: icedCaramelLatteImg,
-    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+    category: 'ice', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-teal-600'
   },
   {
     id: 316, name: 'ICED MATCHA LATTE', price: 950,
     image: icedMatchaLatteImg,
-    category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
+    category: 'ice', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-teal-600'
   },
   // 🥤 POCKET CUPS — Takeaway & Delivery (4 items)
   {
@@ -165,12 +165,12 @@ const allItems: ShopItem[] = [
   {
     id: 323, name: 'VANILLA MILK BOTTLE', price: 700,
     image: vanilaMilkImg,
-    category: 'bottle', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-purple-600'
+    category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
   },
   {
     id: 324, name: 'CHOCO MILK BOTTLE', price: 750,
     image: chocoMilkImg,
-    category: 'bottle', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-purple-600'
+    category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
   },
 ]
 
@@ -254,11 +254,8 @@ function handleAddToCart(item: ShopItem): void {
           <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-amber-700 px-3 py-1 rounded-full">
             ☕ HOT — DINE-IN ONLY
           </span>
-          <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-blue-600 px-3 py-1 rounded-full">
-            🧊 ICE — DINE-IN & TAKEAWAY
-          </span>
           <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-teal-600 px-3 py-1 rounded-full">
-            🚚 ICE — DELIVERY AVAILABLE
+            🧊 ICE — DINE-IN, TAKEAWAY & DELIVERY
           </span>
           <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-orange-600 px-3 py-1 rounded-full">
             🥤 POCKET CUP — TAKEAWAY & DELIVERY
