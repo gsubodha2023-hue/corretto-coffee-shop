@@ -20,7 +20,7 @@ import icedAmericanoImg    from '../assets/Iced_americano.jpg'
 import icedCappuccinoImg   from '../assets/Iced_cappuccino.webp'
 import frappuccinoImg      from '../assets/Frappuccino.jpg'
 import icedMochaImg        from '../assets/Iced_mocha.jpg'
-import icedCaramelLatteImg from '../assets/Iced_caremel_latte.webp'
+import icedCaramelLatteImg from '../assets/Iced_caramel_latte.jpg'
 import icedMatchaLatteImg  from '../assets/Iced_matcha_latte.jpg'
 
 // Pocket cups
