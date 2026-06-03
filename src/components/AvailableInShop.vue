@@ -3,6 +3,38 @@ import { ref, computed } from 'vue'
 import { useCart } from '../composables/useCart'
 import type { Product } from '../types'
 
+// Hot coffees
+import cappuccinoMilkImg   from '../assets/Cappuccino_milk..jpg'
+import flatWhiteMilkImg    from '../assets/Flat_white_milk.jpg'
+import latteMacchiatoImg   from '../assets/Latte_macchiato.jpg'
+import blackSrilankanImg   from '../assets/Black_srilankan.jpg'
+import blackEnglandImg     from '../assets/Black_england.jpg'
+import whiteChocoImg       from '../assets/White_choco.jpg'
+import latteBrownImg       from '../assets/Latte_brown.jpg'
+import espressoClassicImg  from '../assets/Espresso_classic.jpg'
+
+// Ice coffees
+import iceLatteMilkImg     from '../assets/Ice_latte-milk.jpg'
+import coldBrewSpecialImg  from '../assets/Cold_brew_special.jpg'
+import icedAmericanoImg    from '../assets/Iced_americano.jpg'
+import icedCappuccinoImg   from '../assets/Iced_cappuccino.webp'
+import frappuccinoImg      from '../assets/Frappuccino.jpg'
+import icedMochaImg        from '../assets/Iced_mocha.jpg'
+import icedCaramelLatteImg from '../assets/Iced_caremel_latte.webp'
+import icedMatchaLatteImg  from '../assets/Iced_matcha_latte.jpg'
+
+// Pocket cups
+import pocketAmericanoImg  from '../assets/Pocket_americano.jpg'
+import pocketLatteImg      from '../assets/Pocket_latte.jpg'
+import pocketCappuccinoImg from '../assets/Pocket_cappuccino.jpg'
+import pocketMochaImg      from '../assets/Pocket_mocha.jpg'
+
+// Milk bottles
+import milkCoffeeBottleImg from '../assets/Milk_coffee_bottle.jpg'
+import caramelMilkImg      from '../assets/Caramel_milk.jpg'
+import vanilaMilkImg       from '../assets/Vanila_milk.jpg'
+import chocoMilkImg        from '../assets/Choco_milk.jpg'
+
 const { addToCart } = useCart()
 
 interface ShopItem {
@@ -19,125 +51,125 @@ const allItems: ShopItem[] = [
   // ☕ HOT COFFEES — Dine-in ONLY (8 items)
   {
     id: 301, name: 'CAPPUCCINO MILK COFFEE', price: 720,
-    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=85',
+    image: cappuccinoMilkImg,
     category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
   },
   {
     id: 302, name: 'FLAT WHITE MILK COFFEE', price: 680,
-    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=400&q=85',
+    image: flatWhiteMilkImg,
     category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
   },
   {
     id: 303, name: 'LATTE MACCHIATO', price: 750,
-    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=85',
+    image: latteMacchiatoImg,
     category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
   },
   {
     id: 304, name: 'BLACK SRI LANKAN COFFEE', price: 650,
-    image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400&q=85',
+    image: blackSrilankanImg,
     category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
   },
   {
     id: 305, name: 'BLACK ENGLAND COFFEE', price: 730,
-    image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=85',
+    image: blackEnglandImg,
     category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
   },
   {
     id: 306, name: 'WHITE CHOCO COFFEE', price: 780,
-    image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&q=85',
+    image: whiteChocoImg,
     category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
   },
   {
     id: 307, name: 'LATTE BROWN COFFEE', price: 680,
-    image: 'https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?w=400&q=85',
+    image: latteBrownImg,
     category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
   },
   {
     id: 308, name: 'ESPRESSO CLASSIC', price: 600,
-    image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&q=85',
+    image: espressoClassicImg,
     category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
   },
   // 🧊 ICE COFFEES — Dine-in, Takeaway & Delivery (8 items)
   {
     id: 309, name: 'ICE LATTE MILK COFFEE', price: 550,
-    image: 'https://images.unsplash.com/photo-1517959105821-eaf2591984ca?w=400&q=85',
+    image: iceLatteMilkImg,
     category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
   },
   {
     id: 310, name: 'COLD BREW SPECIAL', price: 850,
-    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=85',
+    image: coldBrewSpecialImg,
     category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
   },
   {
     id: 311, name: 'ICED AMERICANO', price: 620,
-    image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=85',
+    image: icedAmericanoImg,
     category: 'ice', tag: 'DINE-IN & TAKEAWAY', tagColor: 'bg-blue-600'
   },
   {
     id: 312, name: 'ICED CAPPUCCINO', price: 750,
-    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=85',
+    image: icedCappuccinoImg,
     category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
   },
   {
     id: 313, name: 'FRAPPUCCINO', price: 900,
-    image: 'https://images.unsplash.com/photo-1578301978162-7aae4d755744?w=400&q=85',
+    image: frappuccinoImg,
     category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
   },
   {
     id: 314, name: 'ICED MOCHA', price: 820,
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=85',
+    image: icedMochaImg,
     category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
   },
   {
     id: 315, name: 'ICED CARAMEL LATTE', price: 880,
-    image: 'https://images.unsplash.com/photo-1529892485617-25f63cd7b1e9?w=400&q=85',
+    image: icedCaramelLatteImg,
     category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
   },
   {
     id: 316, name: 'ICED MATCHA LATTE', price: 950,
-    image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=85',
+    image: icedMatchaLatteImg,
     category: 'ice', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-teal-600'
   },
   // 🥤 POCKET CUPS — Takeaway & Delivery (4 items)
   {
     id: 317, name: 'POCKET AMERICANO', price: 480,
-    image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=400&q=85',
+    image: pocketAmericanoImg,
     category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
   },
   {
     id: 318, name: 'POCKET LATTE', price: 520,
-    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=85',
+    image: pocketLatteImg,
     category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
   },
   {
     id: 319, name: 'POCKET CAPPUCCINO', price: 560,
-    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=85',
+    image: pocketCappuccinoImg,
     category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
   },
   {
     id: 320, name: 'POCKET MOCHA', price: 590,
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=85',
+    image: pocketMochaImg,
     category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
   },
   // 🍶 MILK BOTTLES — Takeaway & Delivery (4 items)
   {
     id: 321, name: 'MILK COFFEE BOTTLE', price: 650,
-    image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&q=85',
+    image: milkCoffeeBottleImg,
     category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
   },
   {
     id: 322, name: 'CARAMEL MILK BOTTLE', price: 720,
-    image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=400&q=85',
+    image: caramelMilkImg,
     category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
   },
   {
     id: 323, name: 'VANILLA MILK BOTTLE', price: 700,
-    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=85',
+    image: vanilaMilkImg,
     category: 'bottle', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-purple-600'
   },
   {
     id: 324, name: 'CHOCO MILK BOTTLE', price: 750,
-    image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=400&q=85',
+    image: chocoMilkImg,
     category: 'bottle', tag: 'DELIVERY AVAILABLE', tagColor: 'bg-purple-600'
   },
 ]
@@ -164,10 +196,6 @@ const filteredItems = computed<ShopItem[]>(() =>
 
 const displayedItems = computed<ShopItem[]>(() =>
   showAll.value ? filteredItems.value : filteredItems.value.slice(0, INITIAL)
-)
-
-const hasMore = computed<boolean>(() =>
-  filteredItems.value.length > INITIAL && !showAll.value
 )
 
 function toggleShowMore(): void {
