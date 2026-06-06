@@ -4,7 +4,9 @@ import { useCart } from '../composables/useCart'
 import type { Product } from '../types'
 import seafoodImg         from '../assets/seafoodPastry.png'
 import chickenImg         from '../assets/chickenPastry.png'
+import lavacakeImg        from '../assets/Lava_cake.jpg'
 import chocolateCroissant from '../assets/Chocolate_Croissant.jpg'
+import blueberryMuffinImg from '../assets/Blueberry_muffin.jpg'
 import cinnamonRoll       from '../assets/Cinnamon_Roll.jpg'
 import appleTurnover      from '../assets/Apple_Turnover.jpg'
 import butterCroissant    from '../assets/Butter_Croissant.jpg'
@@ -12,6 +14,9 @@ import tiramisuImg        from '../assets/Tiramisu.jpg'
 import cheeseCakeImg      from '../assets/Cheese_cake.jpeg'
 import chocolateCakeImg   from '../assets/Chocolate_cake.jpg'
 import bananaBreadImg     from '../assets/Banana_bred.jpg'
+import eclairImg          from '../assets/Eclair.jpg'
+import macaronImg         from '../assets/Macaron.jpg'
+import strawberryTartImg from '../assets/Strawberry_tart.jpg'
 import margheritaImg      from '../assets/Margherita_Pizza.png'
 import chickenBurgerImg   from '../assets/Double_Chicken_Burger.png'
 import fireGrillImg       from '../assets/Fire_Grill_Burger.png'
@@ -34,17 +39,17 @@ interface PastryItem {
 const allPastries: PastryItem[] = [
   { id: 201, name: 'SEAFOOD PASTRY',        price: 220, image: seafoodImg,         category: 'pastry' },
   { id: 202, name: 'CHICKEN PASTRY',        price: 180, image: chickenImg,         category: 'pastry' },
-  { id: 203, name: 'LAVA CAKE',             price: 200, image: 'https://images.unsplash.com/photo-1617305855058-336d24456869?w=600&q=90', category: 'cake' },
+  { id: 203, name: 'LAVA CAKE',             price: 200, image: lavacakeImg,        category: 'cake' },
   { id: 204, name: 'CHOCOLATE CROISSANT',   price: 160, image: chocolateCroissant, category: 'pastry' },
-  { id: 205, name: 'BLUEBERRY MUFFIN',      price: 140, image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=90', category: 'pastry' },
+  { id: 205, name: 'BLUEBERRY MUFFIN',      price: 140, image: blueberryMuffinImg, category: 'pastry' },
   { id: 206, name: 'CINNAMON ROLL',         price: 170, image: cinnamonRoll,       category: 'pastry' },
   { id: 207, name: 'APPLE TURNOVER',        price: 175, image: appleTurnover,      category: 'pastry' },
   { id: 208, name: 'BANANA BREAD',          price: 165, image: bananaBreadImg,     category: 'pastry' },
-  { id: 209, name: 'ÉCLAIR',               price: 195, image: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&q=90', category: 'pastry' },
-  { id: 210, name: 'MACARON',               price: 150, image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=90', category: 'pastry' },
+  { id: 209, name: 'ÉCLAIR',                price: 195, image: eclairImg,          category: 'pastry' },
+  { id: 210, name: 'MACARON',               price: 150, image: macaronImg,           category: 'pastry' },
   { id: 211, name: 'TIRAMISU',              price: 250, image: tiramisuImg,        category: 'cake' },
   { id: 212, name: 'BUTTER CROISSANT',      price: 155, image: butterCroissant,    category: 'pastry' },
-  { id: 213, name: 'STRAWBERRY TART',       price: 210, image: 'https://images.unsplash.com/photo-1587248720327-8eb72564be1e?w=600&q=90', category: 'pastry' },
+  { id: 213, name: 'STRAWBERRY TART',       price: 210, image: strawberryTartImg,  category: 'pastry' },
   { id: 214, name: 'CHEESE CAKE',           price: 230, image: cheeseCakeImg,      category: 'cake' },
   { id: 215, name: 'CHOCOLATE CAKE',        price: 280, image: chocolateCakeImg,   category: 'cake' },
   { id: 216, name: 'MARGHERITA PIZZA',      price: 350, image: margheritaImg,      category: 'food' },
