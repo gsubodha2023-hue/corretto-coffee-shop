@@ -72,7 +72,7 @@ function handleAddToCart(product: CoffeeProduct): void {
       </svg>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 relative z-10">
+    <div class="max-w-6xl mx-auto px-6 relative z-10"> 
       <div class="text-center mb-16">
         <h2 class="text-4xl font-bold tracking-[0.2em] mb-4 transition-colors duration-300
                    text-gray-900 dark:text-white"
@@ -195,3 +195,4 @@ function handleAddToCart(product: CoffeeProduct): void {
 .pop-enter-active, .pop-leave-active { transition: all 0.3s ease; }
 .pop-enter-from, .pop-leave-to { transform: translateY(-5px); opacity: 0; }
 </style>
+
