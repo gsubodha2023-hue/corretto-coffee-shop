@@ -3,18 +3,20 @@ import { ref, computed } from 'vue'
 import { useCart } from '../composables/useCart'
 import type { Product } from '../types'
 
-// ✅ Your uploaded Guatemala photo — save as Amber_Pyramid.jpg in src/assets/
-import guatemalaImg from '../assets/Amber_Pyramid.jpg'
-
-// ✅ Replace these with your own photos when ready:
-import americaImg   from '../assets/Crimson_Savanna.jpg'
-import englandImg   from '../assets/Desert_Mirage.jpg'
-import australiaImg from '../assets/Golden_Llama.jpg'
-import indiaImg     from '../assets/Jade_Highlands.jpg'
-import ethiopiaImg  from '../assets/Midnight_Bloom.jpg'
-import colombiaImg  from '../assets/Obsidian_Rainforest.jpg'
-import brazilImg    from '../assets/Scarlet_Gorilla.jpg'
-import kenyaImg     from '../assets/Velvet_Andes.jpg'
+import guatemalaImg    from '../assets/Amber_Pyramid.jpg'
+import ceylonCrestImg  from '../assets/Ceylon_Crest_Coffee.jpeg'
+import kandyanImg      from '../assets/Kandyan_Coffee.jpeg'
+import lionBrewImg     from '../assets/Lion_Brew.jpeg'
+import serendibImg     from '../assets/Serendib_Coffee.jpeg'
+import crimsonSavannaImg    from '../assets/Crimson_Savanna.jpg'
+import desertMirageImg    from '../assets/Desert_Mirage.jpg'
+import goldenLlamaImg    from '../assets/Golden_Llama.jpg'
+import jadeHighlandsImg   from '../assets/Jade_Highlands.jpg'
+import midnightBloomImg   from '../assets/Midnight_Bloom.jpg'
+import obsidianRainforestImg from '../assets/Obsidian_Rainforest.jpg'
+import scarletGorillaImg   from '../assets/Scarlet_Gorilla.jpg'
+import velvetAndesImg   from '../assets/Velvet_Andes.jpg'
+import mistAndArchImg   from '../assets/Mist_&_Arch_Coffee.jpg'
 
 const { addToCart } = useCart()
 
@@ -28,113 +30,150 @@ interface CoffeeProduct {
   roast: string
   image: string
   labelColor: string
+  delivery: boolean
+  tag?: string
 }
 
 const coffeeProducts: CoffeeProduct[] = [
+  
+  // ── 4 Sri Lanka Products (1000g · DELIVERY AVAILABLE) ───────────────────
   {
-    id: 101, name: 'AMERICA COFFEE',
-    price: 5800, origin: 'America', country: 'NORTH AMERICA',
-    weight: '250g', roast: 'Medium',
-    // Replace with: image: americaImg
-    image: americaImg,
-    labelColor: '#4a8a88'
+    id: 110, name: 'CEYLON CREST COFFEE',   price: 8900,
+    origin: 'CEYLON',  country: 'SRI LANKA',       weight: '1000g', roast: 'Medium-Dark',
+    image: ceylonCrestImg,
+    labelColor: '#6B3A2A', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
   {
-    id: 102, name: 'ENGLAND COFFEE',
-    price: 5200, origin: 'England', country: 'UNITED KINGDOM',
-    weight: '250g', roast: 'Dark',
-    image: englandImg,
-    labelColor: '#3a6848'
+    id: 111, name: 'KANDY HIGHLAND COFFEE', price: 8500,
+    origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Dark',
+    image: kandyanImg,
+    labelColor: '#4E342E', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
   {
-    id: 103, name: 'AUSTRALIA COFFEE',
-    price: 5350, origin: 'Australia', country: 'AUSTRALIA',
-    weight: '250g', roast: 'Medium',
-    // Replace with: image: australiaImg
-    image: australiaImg,
-    labelColor: '#aa6030'
+    id: 112, name: 'LION BREW COFFEE',   price: 8200,
+    origin: 'CEYLON', country: 'SRI LANKA',    weight: '1000g', roast: 'Light',
+    image: lionBrewImg,
+    labelColor: '#2E7D32', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
   {
-    id: 104, name: 'INDIA COFFEE',
-    price: 4800, origin: 'India', country: 'INDIA',
-    weight: '250g', roast: 'Dark',
-    // Replace with: image: indiaImg
-    image: indiaImg,
-    labelColor: '#6a2040'
+    id: 113, name: 'SERENDIB COFFEE',  price: 8300,
+    origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Medium',
+    image: serendibImg,
+    labelColor: '#1565C0', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
   {
-    id: 105, name: 'GUATEMALA COFFEE',
-    price: 6200, origin: 'Guatemala', country: 'GUATEMALA',
-    weight: '250g', roast: 'Medium-Dark',
-    image: guatemalaImg,             // ✅ Your real photo
-    labelColor: '#8B4513'
+    id: 114, name: 'MIST & ARCH COFFEE',  price: 8300,
+    origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Medium',
+    image: mistAndArchImg,
+    labelColor: '#1565C0', delivery: true, tag: 'DELIVERY AVAILABLE'
+  },
+  // ── Original 9 products (250g) ──────────────────────────────────────────
+  {
+    id: 101, name: 'AMBER PYRAMID',   price: 5800,
+    origin: 'IMPORTED',   country: 'NORTH AMERICA',  weight: '1000g', roast: 'Medium',
+    image: crimsonSavannaImg,
+    labelColor: '#4a8a88', delivery: false
   },
   {
-    id: 106, name: 'ETHIOPIA COFFEE',
-    price: 5950, origin: 'Ethiopia', country: 'ETHIOPIA',
-    weight: '250g', roast: 'Light',
-    // Replace with: image: ethiopiaImg
-    image: ethiopiaImg,
-    labelColor: '#5C2A06'
+    id: 102, name: 'DESERT MIRAGE',   price: 5200,
+    origin: 'IMPORTED',   country: 'UNITED KINGDOM', weight: '1000g', roast: 'Dark',
+    image: desertMirageImg,
+    labelColor: '#3a6848', delivery: false
   },
   {
-    id: 107, name: 'COLOMBIA COFFEE',
-    price: 5500, origin: 'Colombia', country: 'COLOMBIA',
-    weight: '250g', roast: 'Medium',
-    // Replace with: image: colombiaImg
-    image: colombiaImg,
-    labelColor: '#1B5E20'
+    id: 103, name: 'GOLDEN LLAMA', price: 6350,
+    origin: 'IMPORTED', country: 'AUSTRALIA',       weight: '1000g', roast: 'Medium',
+    image: goldenLlamaImg,
+    labelColor: '#aa6030', delivery: false
   },
   {
-    id: 108, name: 'BRAZIL COFFEE',
-    price: 4600, origin: 'Brazil', country: 'BRAZIL',
-    weight: '250g', roast: 'Dark',
-    // Replace with: image: brazilImg
-    image: brazilImg,
-    labelColor: '#F57F17'
+    id: 104, name: 'JADE HIGHLANDS',     price: 6800,
+    origin: 'IMPORTED',     country: 'INDIA',           weight: '1000g', roast: 'Dark',
+    image: jadeHighlandsImg,
+    labelColor: '#6a2040', delivery: false
   },
   {
-    id: 109, name: 'KENYA COFFEE',
-    price: 5100, origin: 'Kenya', country: 'KENYA',
-    weight: '250g', roast: 'Medium',
-    // Replace with: image: kenyaImg
-    image: kenyaImg,
-    labelColor: '#7F0000'
+    id: 105, name: 'AMBER PYRAMID', price: 7200,
+    origin: 'IMPORTED', country: 'GUATEMALA',       weight: '1000g', roast: 'Medium-Dark',
+    image: guatemalaImg,
+    labelColor: '#8B4513', delivery: false
   },
+  {
+    id: 106, name: 'MIDNIGHT BLOOM',  price: 6950,
+    origin: 'IMPORTED',  country: 'ETHIOPIA',        weight: '1000g', roast: 'Light',
+    image: midnightBloomImg,
+    labelColor: '#5C2A06', delivery: false
+  },
+  {
+    id: 107, name: 'OBSIDIAN RAINFOREST',  price: 6500,
+    origin: 'IMPORTED',  country: 'COLOMBIA',        weight: '1000g', roast: 'Medium',
+    image: obsidianRainforestImg,
+    labelColor: '#1B5E20', delivery: false
+  },
+  {
+    id: 108, name: 'BRAZIL COFFEE',    price: 5600,
+    origin: 'IMPORTED',    country: 'BRAZIL',          weight: '1000g', roast: 'Dark',
+    image: scarletGorillaImg,
+    labelColor: '#F57F17', delivery: false
+  },
+  {
+    id: 109, name: 'VELVET ANDES',     price: 6100,
+    origin: 'IMPORTED',     country: 'KENYA',           weight: '1000g', roast: 'Medium',
+    image: velvetAndesImg,
+    labelColor: '#7F0000', delivery: false
+  },
+
 ]
 
-// 🔍 Search
+// Search
 const searchQuery = ref<string>('')
 
-const filteredProducts = computed<CoffeeProduct[]>(() => {
-  const q = searchQuery.value.trim().toLowerCase()
-  if (!q) return coffeeProducts
-  return coffeeProducts.filter(p =>
-    p.name.toLowerCase().includes(q) ||
-    p.origin.toLowerCase().includes(q) ||
-    p.country.toLowerCase().includes(q) ||
-    p.roast.toLowerCase().includes(q)
-  )
-})
+// Filter: all | 250g | 1000g
+const activeFilter = ref<string>('all')
+const filters = [
+  { key: 'all',   label: 'ALL (14)' },
+  //{ key: '250g',  label: '☕ 250g' },
+  { key: '1000g', label: '🇱🇰 1000g Standard Pack' },
+]
 
 // SEE MORE — show 4 first
 const INITIAL = 4
 const showAll = ref<boolean>(false)
 
+const filteredProducts = computed<CoffeeProduct[]>(() => {
+  let list = coffeeProducts
+  if (activeFilter.value !== 'all') {
+    list = list.filter(p => p.weight === activeFilter.value)
+  }
+  if (searchQuery.value.trim()) {
+    const q = searchQuery.value.toLowerCase()
+    list = list.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.origin.toLowerCase().includes(q) ||
+      p.country.toLowerCase().includes(q)
+    )
+  }
+  return list
+})
+
 const displayedProducts = computed<CoffeeProduct[]>(() =>
   showAll.value ? filteredProducts.value : filteredProducts.value.slice(0, INITIAL)
 )
+
+function setFilter(key: string): void {
+  activeFilter.value = key
+  showAll.value = false
+}
+
+function handleSearch(): void {
+  showAll.value = false
+}
 
 function toggleShowMore(): void {
   showAll.value = !showAll.value
   if (!showAll.value) {
     document.getElementById('online-shop')?.scrollIntoView({ behavior: 'smooth' })
   }
-}
-
-function clearSearch(): void {
-  searchQuery.value = ''
-  showAll.value = false
 }
 
 // Cart
@@ -145,7 +184,7 @@ function handleAddToCart(product: CoffeeProduct): void {
     id: product.id,
     title: product.name,
     price: product.price / 320,
-    description: `${product.origin} Roasted Coffee – ${product.roast} Roast`,
+    description: `${product.roast} Roast · ${product.weight} · ${product.country}`,
     category: 'coffee-bag',
     thumbnail: product.image,
     images: [product.image],
@@ -171,6 +210,8 @@ function handleAddToCart(product: CoffeeProduct): void {
         <ellipse cx="95" cy="210" rx="45" ry="22" transform="rotate(-30 95 210)" stroke="#c8a27a" stroke-width="1.5" fill="none"/>
         <ellipse cx="72" cy="310" rx="40" ry="20" transform="rotate(20 72 310)" stroke="#c8a27a" stroke-width="1.5" fill="none"/>
         <ellipse cx="98" cy="400" rx="42" ry="21" transform="rotate(-15 98 400)" stroke="#c8a27a" stroke-width="1.5" fill="none"/>
+        <circle cx="88" cy="200" r="5" stroke="#c8a27a" stroke-width="1" fill="none"/>
+        <circle cx="78" cy="295" r="5" stroke="#c8a27a" stroke-width="1" fill="none"/>
       </svg>
     </div>
 
@@ -199,16 +240,11 @@ function handleAddToCart(product: CoffeeProduct): void {
         </p>
 
         <!-- 🔍 Search Bar -->
-        <div class="flex items-center justify-center gap-3 max-w-md mx-auto">
+        <div class="flex items-center justify-center gap-3 max-w-md mx-auto mb-6">
           <div class="flex-1 relative">
-            <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500"
-                 width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
             <input
               v-model="searchQuery"
+              @input="handleSearch"
               type="text"
               placeholder="Search by origin or country..."
               class="w-full pl-10 pr-4 py-2.5 text-sm rounded-full border outline-none transition-all duration-300
@@ -218,22 +254,48 @@ function handleAddToCart(product: CoffeeProduct): void {
                      placeholder-gray-400 dark:placeholder-gray-500
                      focus:ring-2 focus:ring-amber-400"
             />
+            <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
+                 width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
           </div>
           <button
             v-if="searchQuery"
-            @click="clearSearch"
+            @click="searchQuery = ''; showAll = false"
             class="text-xs font-bold tracking-wider px-4 py-2.5 rounded-full border transition-colors
-                   border-gray-300 dark:border-gray-600
-                   text-gray-500 dark:text-gray-400
+                   border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400
                    hover:border-red-400 hover:text-red-500"
           >
             CLEAR
           </button>
         </div>
 
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 mb-4">
+          <button
+            v-for="f in filters" :key="f.key"
+            @click="setFilter(f.key)"
+            class="px-4 py-2 text-xs font-bold tracking-wider rounded-full border transition-all duration-200"
+            :class="activeFilter === f.key
+              ? 'bg-coffee-dark dark:bg-amber-600 text-white border-coffee-dark scale-105'
+              : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-amber-500 hover:text-amber-600'"
+          >{{ f.label }}</button>
+        </div>
+
+        <!-- Sri Lanka info badge -->
+        <div class="flex justify-center gap-2 flex-wrap">
+          <span class="text-[9px] font-bold tracking-wider text-white bg-amber-700 px-3 py-1 rounded-full">
+            STANDARD QUOALITY COFFEE
+          </span>
+          <span class="text-[9px] font-bold tracking-wider text-white bg-green-700 px-3 py-1 rounded-full">
+            🇱🇰 1000g STANDARD PACK — DELIVERY AVAILABLE
+          </span>
+        </div>
+
         <!-- No results -->
         <p v-if="filteredProducts.length === 0"
-           class="text-sm text-gray-400 dark:text-gray-600 mt-6 tracking-wider">
+           class="text-sm text-gray-400 dark:text-gray-600 mt-4 tracking-wider">
           No coffee found for "{{ searchQuery }}"
         </p>
       </div>
@@ -248,16 +310,16 @@ function handleAddToCart(product: CoffeeProduct): void {
         >
           <div class="text-center group cursor-pointer">
 
-            <!-- Photo Card -->
+            <!-- Coffee Bag Photo Card -->
             <div
-              class="relative mb-4 overflow-hidden transition-all duration-300
-                     border-2 border-coffee-mid/20 dark:border-gray-600 rounded-sm
+              class="relative mb-4 overflow-hidden rounded-sm border-2 transition-all duration-300
+                     border-coffee-mid/20 dark:border-gray-600
                      bg-white dark:bg-gray-700
-                     group-hover:shadow-2xl group-hover:-translate-y-1"
+                     group-hover:shadow-xl group-hover:-translate-y-1"
             >
               <!-- Colored label at top -->
               <div
-                class="absolute top-0 left-0 right-0 h-8 z-10 flex items-center justify-center"
+                class="absolute top-0 left-0 right-0 h-8 flex items-center justify-center z-10"
                 :style="`background-color:${product.labelColor}`"
               >
                 <span class="text-white text-[10px] font-bold tracking-[0.2em] italic">
@@ -269,10 +331,15 @@ function handleAddToCart(product: CoffeeProduct): void {
               <img
                 :src="product.image"
                 :alt="product.name"
-                class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-                style="padding-top: 2rem;"
+                class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500 pt-8"
                 loading="lazy"
               />
+
+              <!-- DELIVERY badge for Sri Lanka products -->
+              <div v-if="product.delivery"
+                   class="absolute top-9 right-2 bg-green-600 text-white text-[8px] font-bold tracking-wider px-2 py-0.5 rounded-sm z-10">
+                🚚 DELIVERY
+              </div>
 
               <!-- Roast badge -->
               <div class="absolute bottom-2 right-2 bg-black/50 text-white text-[9px] font-bold tracking-wider px-2 py-0.5 rounded-sm">
@@ -280,33 +347,36 @@ function handleAddToCart(product: CoffeeProduct): void {
               </div>
 
               <!-- Weight badge -->
-              <div class="absolute bottom-2 left-2 bg-white/80 dark:bg-gray-900/80 text-[9px] font-bold tracking-wider px-2 py-0.5 rounded-sm
-                          text-coffee-dark dark:text-amber-400">
+              <div
+                class="absolute bottom-2 left-2 text-[9px] font-bold tracking-wider px-2 py-0.5 rounded-sm"
+                :class="product.weight === '1000g'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-white/80 dark:bg-gray-900/80 text-coffee-dark dark:text-amber-400'"
+              >
                 {{ product.weight }}
               </div>
             </div>
 
             <!-- Name -->
-            <h3 class="font-bold text-xs tracking-[0.15em] mb-1 transition-colors duration-300
-                       text-coffee-dark dark:text-amber-400"
+            <h3 class="font-bold text-xs tracking-[0.12em] mb-1 transition-colors duration-300
+                       text-coffee-dark dark:text-amber-400 leading-tight"
                 style="font-family:'Playfair Display',Georgia,serif;">
               {{ product.name }}
             </h3>
 
-            <!-- Country -->
+            <!-- Country + weight -->
             <p class="text-[10px] tracking-wider mb-2 transition-colors duration-300
                       text-gray-400 dark:text-gray-500">
-              {{ product.country }}
+              {{ product.country }} · {{ product.weight }}
             </p>
 
-            <!-- Price + Cart -->
+            <!-- Price + Cart Button -->
             <div class="flex items-center justify-center gap-3">
               <span class="text-sm font-bold transition-colors duration-300
                            text-gray-700 dark:text-gray-300">
                 LKR {{ product.price.toLocaleString() }}
               </span>
 
-              <!-- Cart Button -->
               <button
                 @click="handleAddToCart(product)"
                 :title="`Add ${product.name} to cart`"
@@ -319,8 +389,7 @@ function handleAddToCart(product: CoffeeProduct): void {
                      xmlns="http://www.w3.org/2000/svg" width="15" height="15"
                      viewBox="0 0 24 24" fill="none" stroke="white"
                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="9" cy="21" r="1"/>
-                  <circle cx="20" cy="21" r="1"/>
+                  <circle cx="9"  cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                 </svg>
                 <svg v-else
@@ -353,9 +422,10 @@ function handleAddToCart(product: CoffeeProduct): void {
                  text-gray-800 dark:text-gray-300
                  hover:text-amber-700 dark:hover:text-amber-400"
         >
-          {{ showAll ? 'SEE LESS' : `SEE MORE (${filteredProducts.length - displayedProducts.length} more)` }}
+          {{ showAll ? 'SEE LESS' : `SEE MORE (${filteredProducts.length - INITIAL} more)` }}
           <span
-            class="inline-flex items-center justify-center w-6 h-6 rounded-full border border-current text-xs transition-all
+            class="inline-flex items-center justify-center w-6 h-6 rounded-full border border-current
+                   text-xs transition-all
                    group-hover:bg-amber-700 group-hover:border-amber-700 group-hover:text-white"
             :style="showAll ? 'transform:rotate(180deg)' : 'transform:rotate(0deg)'"
           >→</span>
