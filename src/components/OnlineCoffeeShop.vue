@@ -36,7 +36,7 @@ interface CoffeeProduct {
 
 const coffeeProducts: CoffeeProduct[] = [
   
-  // ── 4 Sri Lanka Products (1000g · DELIVERY AVAILABLE) ───────────────────
+  
   {
     id: 110, name: 'CEYLON CREST COFFEE',   price: 8900,
     origin: 'CEYLON',  country: 'SRI LANKA',       weight: '1000g', roast: 'Medium-Dark',
@@ -44,80 +44,80 @@ const coffeeProducts: CoffeeProduct[] = [
     labelColor: '#6B3A2A', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
   {
-    id: 111, name: 'KANDY HIGHLAND COFFEE', price: 8500,
+    id: 101, name: 'KANDY HIGHLAND COFFEE', price: 8500,
     origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Dark',
     image: kandyanImg,
     labelColor: '#4E342E', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
   {
-    id: 112, name: 'LION BREW COFFEE',   price: 8200,
+    id: 102, name: 'LION BREW COFFEE',   price: 8200,
     origin: 'CEYLON', country: 'SRI LANKA',    weight: '1000g', roast: 'Light',
     image: lionBrewImg,
     labelColor: '#2E7D32', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
   {
-    id: 113, name: 'SERENDIB COFFEE',  price: 8300,
+    id: 103, name: 'SERENDIB COFFEE',  price: 8300,
     origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Medium',
     image: serendibImg,
     labelColor: '#1565C0', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
   {
-    id: 114, name: 'MIST & ARCH COFFEE',  price: 8300,
+    id: 104, name: 'MIST & ARCH COFFEE',  price: 8300,
     origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Medium',
     image: mistAndArchImg,
     labelColor: '#1565C0', delivery: true, tag: 'DELIVERY AVAILABLE'
   },
-  // ── Original 9 products (250g) ──────────────────────────────────────────
+  
   {
-    id: 101, name: 'AMBER PYRAMID',   price: 5800,
+    id: 105, name: 'AMBER PYRAMID',   price: 5800,
     origin: 'IMPORTED',   country: 'NORTH AMERICA',  weight: '1000g', roast: 'Medium',
     image: crimsonSavannaImg,
     labelColor: '#4a8a88', delivery: false
   },
   {
-    id: 102, name: 'DESERT MIRAGE',   price: 5200,
+    id: 106, name: 'DESERT MIRAGE',   price: 5200,
     origin: 'IMPORTED',   country: 'UNITED KINGDOM', weight: '1000g', roast: 'Dark',
     image: desertMirageImg,
     labelColor: '#3a6848', delivery: false
   },
   {
-    id: 103, name: 'GOLDEN LLAMA', price: 6350,
+    id: 107, name: 'GOLDEN LLAMA', price: 6350,
     origin: 'IMPORTED', country: 'AUSTRALIA',       weight: '1000g', roast: 'Medium',
     image: goldenLlamaImg,
     labelColor: '#aa6030', delivery: false
   },
   {
-    id: 104, name: 'JADE HIGHLANDS',     price: 6800,
+    id: 108, name: 'JADE HIGHLANDS',     price: 6800,
     origin: 'IMPORTED',     country: 'INDIA',           weight: '1000g', roast: 'Dark',
     image: jadeHighlandsImg,
     labelColor: '#6a2040', delivery: false
   },
   {
-    id: 105, name: 'AMBER PYRAMID', price: 7200,
+    id: 109, name: 'AMBER PYRAMID', price: 7200,
     origin: 'IMPORTED', country: 'GUATEMALA',       weight: '1000g', roast: 'Medium-Dark',
     image: guatemalaImg,
     labelColor: '#8B4513', delivery: false
   },
   {
-    id: 106, name: 'MIDNIGHT BLOOM',  price: 6950,
+    id: 110, name: 'MIDNIGHT BLOOM',  price: 6950,
     origin: 'IMPORTED',  country: 'ETHIOPIA',        weight: '1000g', roast: 'Light',
     image: midnightBloomImg,
     labelColor: '#5C2A06', delivery: false
   },
   {
-    id: 107, name: 'OBSIDIAN RAINFOREST',  price: 6500,
+    id: 111, name: 'OBSIDIAN RAINFOREST',  price: 6500,
     origin: 'IMPORTED',  country: 'COLOMBIA',        weight: '1000g', roast: 'Medium',
     image: obsidianRainforestImg,
     labelColor: '#1B5E20', delivery: false
   },
   {
-    id: 108, name: 'BRAZIL COFFEE',    price: 5600,
+    id: 112, name: 'BRAZIL COFFEE',    price: 5600,
     origin: 'IMPORTED',    country: 'BRAZIL',          weight: '1000g', roast: 'Dark',
     image: scarletGorillaImg,
     labelColor: '#F57F17', delivery: false
   },
   {
-    id: 109, name: 'VELVET ANDES',     price: 6100,
+    id: 113, name: 'VELVET ANDES',     price: 6100,
     origin: 'IMPORTED',     country: 'KENYA',           weight: '1000g', roast: 'Medium',
     image: velvetAndesImg,
     labelColor: '#7F0000', delivery: false
