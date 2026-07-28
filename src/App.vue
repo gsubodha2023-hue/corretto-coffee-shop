@@ -8,6 +8,7 @@ import StatsSection     from './components/StatsSection.vue'
 import OnlineCoffeeShop from './components/OnlineCoffeeShop.vue'
 import PastrySection    from './components/PastrySection.vue'
 import AvailableInShop  from './components/AvailableInShop.vue'
+import ReviewSection    from './components/ReviewSection.vue'
 import CartSidebar      from './components/CartSidebar.vue'
 import FooterSection    from './components/FooterSection.vue'
 
@@ -73,6 +74,7 @@ function handleSearch(query: string): void {
       <OnlineCoffeeShop />
       <PastrySection />
       <AvailableInShop :search-query="searchQuery" />
+      <ReviewSection />
     </main>
 
     <FooterSection />

@@ -38,92 +38,118 @@ const coffeeProducts: CoffeeProduct[] = [
   
   
   {
-    id: 110, name: 'CEYLON CREST COFFEE',   price: 8900,
+    id: 100, name: 'CEYLON CREST COFFEE',   price: 8900,
     origin: 'CEYLON',  country: 'SRI LANKA',       weight: '1000g', roast: 'Medium-Dark',
     image: ceylonCrestImg,
-    labelColor: '#6B3A2A', delivery: true, tag: 'DELIVERY AVAILABLE'
+    labelColor: '#6B3A2A', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 101, name: 'KANDY HIGHLAND COFFEE', price: 8500,
     origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Dark',
     image: kandyanImg,
-    labelColor: '#4E342E', delivery: true, tag: 'DELIVERY AVAILABLE'
+    labelColor: '#4E342E', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 102, name: 'LION BREW COFFEE',   price: 8200,
     origin: 'CEYLON', country: 'SRI LANKA',    weight: '1000g', roast: 'Light',
     image: lionBrewImg,
-    labelColor: '#2E7D32', delivery: true, tag: 'DELIVERY AVAILABLE'
+    labelColor: '#2E7D32', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
-    id: 103, name: 'SERENDIB COFFEE',  price: 8300,
-    origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Medium',
-    image: serendibImg,
-    labelColor: '#1565C0', delivery: true, tag: 'DELIVERY AVAILABLE'
-  },
-  {
-    id: 104, name: 'MIST & ARCH COFFEE',  price: 8300,
-    origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Medium',
-    image: mistAndArchImg,
-    labelColor: '#1565C0', delivery: true, tag: 'DELIVERY AVAILABLE'
-  },
-  
-  {
-    id: 105, name: 'AMBER PYRAMID',   price: 5800,
+    id: 103, name: 'AMBER PYRAMID',   price: 5800,
     origin: 'IMPORTED',   country: 'NORTH AMERICA',  weight: '1000g', roast: 'Medium',
     image: crimsonSavannaImg,
-    labelColor: '#4a8a88', delivery: false
+    labelColor: '#4a8a88', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
+  {
+    id: 104, name: 'SERENDIB COFFEE',  price: 8300,
+    origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Medium',
+    image: serendibImg,
+    labelColor: '#1565C0', delivery: true, tag: 'TAKEAWAY & DELIVERY'
+  },
+  {
+    id: 105, name: 'MIST & ARCH COFFEE',  price: 8300,
+    origin: 'CEYLON',     country: 'SRI LANKA',       weight: '1000g', roast: 'Medium',
+    image: mistAndArchImg,
+    labelColor: '#1565C0', delivery: true, tag: 'TAKEAWAY & DELIVERY'
+  },
+  
+  
   {
     id: 106, name: 'DESERT MIRAGE',   price: 5200,
     origin: 'IMPORTED',   country: 'UNITED KINGDOM', weight: '1000g', roast: 'Dark',
     image: desertMirageImg,
-    labelColor: '#3a6848', delivery: false
+    labelColor: '#3a6848', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 107, name: 'GOLDEN LLAMA', price: 6350,
     origin: 'IMPORTED', country: 'AUSTRALIA',       weight: '1000g', roast: 'Medium',
     image: goldenLlamaImg,
-    labelColor: '#aa6030', delivery: false
+    labelColor: '#aa6030', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 108, name: 'JADE HIGHLANDS',     price: 6800,
     origin: 'IMPORTED',     country: 'INDIA',           weight: '1000g', roast: 'Dark',
     image: jadeHighlandsImg,
-    labelColor: '#6a2040', delivery: false
+    labelColor: '#6a2040', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 109, name: 'AMBER PYRAMID', price: 7200,
     origin: 'IMPORTED', country: 'GUATEMALA',       weight: '1000g', roast: 'Medium-Dark',
     image: guatemalaImg,
-    labelColor: '#8B4513', delivery: false
+    labelColor: '#8B4513', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 110, name: 'MIDNIGHT BLOOM',  price: 6950,
     origin: 'IMPORTED',  country: 'ETHIOPIA',        weight: '1000g', roast: 'Light',
     image: midnightBloomImg,
-    labelColor: '#5C2A06', delivery: false
+    labelColor: '#5C2A06', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 111, name: 'OBSIDIAN RAINFOREST',  price: 6500,
     origin: 'IMPORTED',  country: 'COLOMBIA',        weight: '1000g', roast: 'Medium',
     image: obsidianRainforestImg,
-    labelColor: '#1B5E20', delivery: false
+    labelColor: '#1B5E20', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 112, name: 'BRAZIL COFFEE',    price: 5600,
     origin: 'IMPORTED',    country: 'BRAZIL',          weight: '1000g', roast: 'Dark',
     image: scarletGorillaImg,
-    labelColor: '#F57F17', delivery: false
+    labelColor: '#F57F17', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
   {
     id: 113, name: 'VELVET ANDES',     price: 6100,
     origin: 'IMPORTED',     country: 'KENYA',           weight: '1000g', roast: 'Medium',
     image: velvetAndesImg,
-    labelColor: '#7F0000', delivery: false
+    labelColor: '#7F0000', delivery: true, tag: 'TAKEAWAY & DELIVERY'
   },
 
 ]
+
+const discountedPrices: Record<number, number> = {
+  100: 7990,
+  102: 7490,
+  105: 7690,
+  109: 6490
+}
+
+function getSellingPrice(product: CoffeeProduct): number {
+  return discountedPrices[product.id] ?? product.price
+}
+
+function getDiscountPercentage(product: CoffeeProduct): number {
+  const salePrice = discountedPrices[product.id]
+  if (!salePrice) return 0
+  return Math.round(((product.price - salePrice) / product.price) * 100)
+}
+
+function getRating(product: CoffeeProduct): number {
+  return Number((4.6 + (product.id % 4) * 0.1).toFixed(1))
+}
+
+function getDescription(product: CoffeeProduct): string {
+  return `${product.roast} roast coffee from ${product.country}, packed fresh in a ${product.weight} bag for home or office brewing.`
+}
 
 // Search
 const searchQuery = ref<string>('')
@@ -183,15 +209,16 @@ function handleAddToCart(product: CoffeeProduct): void {
   const cartProduct: Product = {
     id: product.id,
     title: product.name,
-    price: product.price / 320,
-    description: `${product.roast} Roast · ${product.weight} · ${product.country}`,
+    price: getSellingPrice(product) / 320,
+    originalPrice: product.price / 320,
+    description: `${getDescription(product)} Takeaway and delivery are available.`,
     category: 'coffee-bag',
     thumbnail: product.image,
     images: [product.image],
-    rating: 4.8,
+    rating: getRating(product),
     stock: 50,
     brand: product.labelColor,
-    discountPercentage: 0
+    discountPercentage: getDiscountPercentage(product)
   }
   addToCart(cartProduct)
   addedId.value = product.id
@@ -236,7 +263,7 @@ function handleAddToCart(product: CoffeeProduct): void {
         </h2>
         <p class="text-sm max-w-lg mx-auto mb-8 transition-colors duration-300
                   text-gray-500 dark:text-gray-400">
-          Welcome to our online coffee shop, your home for fresh, flavorful coffee delivered right to your door.
+          All coffee products can be ordered for takeaway or delivery. Choose a fresh pack and enjoy premium coffee at home or work.
         </p>
 
         <!-- 🔍 Search Bar -->
@@ -286,10 +313,10 @@ function handleAddToCart(product: CoffeeProduct): void {
         <!-- Sri Lanka info badge -->
         <div class="flex justify-center gap-2 flex-wrap">
           <span class="text-[9px] font-bold tracking-wider text-white bg-amber-700 px-3 py-1 rounded-full">
-            STANDARD QUOALITY COFFEE
+            STANDARD QUALITY COFFEE
           </span>
           <span class="text-[9px] font-bold tracking-wider text-white bg-green-700 px-3 py-1 rounded-full">
-            🇱🇰 1000g STANDARD PACK — DELIVERY AVAILABLE
+            ALL COFFEE PACKS — TAKEAWAY & DELIVERY
           </span>
         </div>
 
@@ -338,7 +365,12 @@ function handleAddToCart(product: CoffeeProduct): void {
               <!-- DELIVERY badge for Sri Lanka products -->
               <div v-if="product.delivery"
                    class="absolute top-9 right-2 bg-green-600 text-white text-[8px] font-bold tracking-wider px-2 py-0.5 rounded-sm z-10">
-                🚚 DELIVERY
+                🛍️ TAKEAWAY · 🚚 DELIVERY
+              </div>
+
+              <div v-if="discountedPrices[product.id]"
+                   class="absolute top-16 right-2 bg-red-600 text-white text-[9px] font-bold tracking-wider px-2 py-1 rounded-sm z-10">
+                -{{ getDiscountPercentage(product) }}%
               </div>
 
               <!-- Roast badge -->
@@ -370,12 +402,27 @@ function handleAddToCart(product: CoffeeProduct): void {
               {{ product.country }} · {{ product.weight }}
             </p>
 
+            <div class="flex items-center justify-center gap-1 mb-2">
+              <span v-for="star in 5" :key="star"
+                    class="text-xs" :class="star <= Math.round(getRating(product)) ? 'text-amber-400' : 'text-gray-300 dark:text-gray-600'">★</span>
+              <span class="text-[10px] font-bold text-gray-500 dark:text-gray-400 ml-1">{{ getRating(product).toFixed(1) }}</span>
+            </div>
+
+            <p class="text-[10px] leading-relaxed mb-3 min-h-[42px] text-gray-500 dark:text-gray-400">
+              {{ getDescription(product) }}
+            </p>
+
             <!-- Price + Cart Button -->
             <div class="flex items-center justify-center gap-3">
-              <span class="text-sm font-bold transition-colors duration-300
-                           text-gray-700 dark:text-gray-300">
-                LKR {{ product.price.toLocaleString() }}
-              </span>
+              <div class="flex flex-col items-center leading-tight">
+                <span v-if="discountedPrices[product.id]" class="text-[10px] line-through text-gray-400">
+                  LKR {{ product.price.toLocaleString() }}
+                </span>
+                <span class="text-sm font-bold transition-colors duration-300
+                             text-gray-700 dark:text-gray-300">
+                  LKR {{ getSellingPrice(product).toLocaleString() }}
+                </span>
+              </div>
 
               <button
                 @click="handleAddToCart(product)"

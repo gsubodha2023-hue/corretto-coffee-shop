@@ -37,6 +37,8 @@ import chocoMilkImg        from '../assets/Choco_milk.jpg'
 
 const { addToCart } = useCart()
 
+const props = defineProps<{ searchQuery?: string }>()
+
 interface ShopItem {
   id: number
   name: string
@@ -134,45 +136,73 @@ const allItems: ShopItem[] = [
   {
     id: 317, name: 'POCKET AMERICANO', price: 480,
     image: pocketAmericanoImg,
-    category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
+    category: 'pocket', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
   },
   {
     id: 318, name: 'POCKET LATTE', price: 520,
     image: pocketLatteImg,
-    category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
+    category: 'pocket', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
   },
   {
     id: 319, name: 'POCKET CAPPUCCINO', price: 560,
     image: pocketCappuccinoImg,
-    category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
+    category: 'pocket', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
   },
   {
     id: 320, name: 'POCKET MOCHA', price: 590,
     image: pocketMochaImg,
-    category: 'pocket', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
+    category: 'pocket', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-orange-600'
   },
   // 🍶 MILK BOTTLES — Takeaway & Delivery (4 items)
   {
     id: 321, name: 'MILK COFFEE BOTTLE', price: 650,
     image: milkCoffeeBottleImg,
-    category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
+    category: 'bottle', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
   },
   {
     id: 322, name: 'CARAMEL MILK BOTTLE', price: 720,
     image: caramelMilkImg,
-    category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
+    category: 'bottle', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
   },
   {
     id: 323, name: 'VANILLA MILK BOTTLE', price: 700,
     image: vanilaMilkImg,
-    category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
+    category: 'bottle', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
   },
   {
     id: 324, name: 'CHOCO MILK BOTTLE', price: 750,
     image: chocoMilkImg,
-    category: 'bottle', tag: 'TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
+    category: 'bottle', tag: 'DINE-IN, TAKEAWAY & DELIVERY', tagColor: 'bg-purple-600'
   },
 ]
+
+const discountedPrices: Record<number, number> = {
+  301: 650,
+  310: 760,
+  313: 810,
+  322: 650
+}
+
+function getSellingPrice(item: ShopItem): number {
+  return discountedPrices[item.id] ?? item.price
+}
+
+function getDiscountPercentage(item: ShopItem): number {
+  const salePrice = discountedPrices[item.id]
+  if (!salePrice) return 0
+  return Math.round(((item.price - salePrice) / item.price) * 100)
+}
+
+function getRating(item: ShopItem): number {
+  return Number((4.5 + (item.id % 5) * 0.1).toFixed(1))
+}
+
+function getDescription(item: ShopItem): string {
+  if (item.category === 'hot') return `${item.name.toLowerCase()} freshly prepared and served hot for dine-in customers.`
+  if (item.category === 'ice') return `A refreshing ${item.name.toLowerCase()} prepared fresh and available for every service option.`
+  if (item.category === 'pocket') return `A convenient ${item.name.toLowerCase()} for dine-in, takeaway, or delivery.`
+  return `A chilled ${item.name.toLowerCase()} with a smooth flavour for dine-in, takeaway, or delivery.`
+}
 
 // Filter tabs
 const activeFilter = ref<string>('all')
@@ -188,11 +218,21 @@ const filters = [
 const showAll  = ref<boolean>(false)
 const INITIAL  = 8
 
-const filteredItems = computed<ShopItem[]>(() =>
-  activeFilter.value === 'all'
+const filteredItems = computed<ShopItem[]>(() => {
+  let items = activeFilter.value === 'all'
     ? allItems
     : allItems.filter(i => i.category === activeFilter.value)
-)
+
+  const query = props.searchQuery?.trim().toLowerCase()
+  if (query) {
+    items = items.filter(item =>
+      item.name.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query) ||
+      item.tag.toLowerCase().includes(query)
+    )
+  }
+  return items
+})
 
 const displayedItems = computed<ShopItem[]>(() =>
   showAll.value ? filteredItems.value : filteredItems.value.slice(0, INITIAL)
@@ -218,15 +258,16 @@ function handleAddToCart(item: ShopItem): void {
   const product: Product = {
     id: item.id,
     title: item.name,
-    price: item.price / 320,
-    description: `${item.tag} — ${item.name}`,
+    price: getSellingPrice(item) / 320,
+    originalPrice: item.price / 320,
+    description: `${getDescription(item)} ${item.tag}.`,
     category: 'shop-coffee',
     thumbnail: item.image,
     images: [item.image],
-    rating: 4.8,
+    rating: getRating(item),
     stock: 50,
     brand: item.tag,
-    discountPercentage: 0
+    discountPercentage: getDiscountPercentage(item)
   }
   addToCart(product)
   addedId.value = item.id
@@ -258,10 +299,10 @@ function handleAddToCart(item: ShopItem): void {
             🧊 ICE — DINE-IN, TAKEAWAY & DELIVERY
           </span>
           <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-orange-600 px-3 py-1 rounded-full">
-            🥤 POCKET CUP — TAKEAWAY & DELIVERY
+            🥤 POCKET CUP — DINE-IN, TAKEAWAY & DELIVERY
           </span>
           <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-purple-600 px-3 py-1 rounded-full">
-            🍶 MILK BOTTLE — TAKEAWAY & DELIVERY
+            🍶 MILK BOTTLE — DINE-IN, TAKEAWAY & DELIVERY
           </span>
         </div>
       </div>
@@ -309,6 +350,10 @@ function handleAddToCart(item: ShopItem): void {
               >
                 {{ item.tag }}
               </span>
+              <span v-if="discountedPrices[item.id]"
+                    class="absolute top-2 right-2 bg-red-600 text-white text-[9px] font-bold tracking-wide px-2 py-1 rounded-sm">
+                -{{ getDiscountPercentage(item) }}%
+              </span>
             </div>
 
             <!-- Info -->
@@ -318,11 +363,25 @@ function handleAddToCart(item: ShopItem): void {
                 {{ item.name }}
               </h3>
 
+              <div class="flex items-center justify-center gap-1 mb-2">
+                <span v-for="star in 5" :key="star" class="text-xs"
+                      :class="star <= Math.round(getRating(item)) ? 'text-amber-400' : 'text-gray-300 dark:text-gray-600'">★</span>
+                <span class="text-[10px] font-bold text-gray-500 dark:text-gray-400 ml-1">{{ getRating(item).toFixed(1) }}</span>
+              </div>
+
+              <p class="text-[10px] leading-relaxed min-h-[42px] mb-3 text-gray-500 dark:text-gray-400">
+                {{ getDescription(item) }}
+              </p>
+
               <div class="flex items-center justify-center gap-3">
-                <span class="text-sm font-semibold transition-colors duration-300
-                             text-gray-700 dark:text-gray-300">
-                  LKR {{ item.price }}
-                </span>
+                <div class="flex flex-col items-center leading-tight">
+                  <span v-if="discountedPrices[item.id]" class="text-[9px] line-through text-gray-400">
+                    LKR {{ item.price }}
+                  </span>
+                  <span class="text-sm font-semibold transition-colors duration-300 text-gray-700 dark:text-gray-300">
+                    LKR {{ getSellingPrice(item) }}
+                  </span>
+                </div>
 
                 <!-- Working Cart Button -->
                 <button

@@ -23,7 +23,7 @@ const emit = defineEmits<{
   (e: 'toggleDark'): void
 }>()
 
-const navLinks: string[] = ['HOME', 'ABOUT US', 'SHOP', 'SERVICES', 'BLOG', 'CONTACT US']
+const navLinks: string[] = ['HOME', 'ABOUT US', 'SHOP', 'REVIEWS', 'SERVICES', 'BLOG', 'CONTACT US']
 
 function handleSearch(): void {
   emit('search', searchInput.value)
@@ -36,6 +36,8 @@ function handleNavClick(link: string): void {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   } else if (link === 'SHOP') {
     document.getElementById('online-shop')?.scrollIntoView({ behavior: 'smooth' })
+  } else if (link === 'REVIEWS') {
+    document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' })
   } else if (link === 'CONTACT US') {
     contactOpen.value = true
   } else if (link === 'ABOUT US') {

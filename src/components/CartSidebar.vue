@@ -33,10 +33,14 @@ function getBagOrigin(item: CartItem): string {
 
 // Format LKR price correctly
 function getLKRPrice(item: CartItem): string {
-  const lkr = item.product.category === 'coffee-bag' || item.product.category === 'pastry'
-    ? item.product.price * 320
-    : item.product.price * 320
+  const lkr = item.product.price * 320
   return `LKR ${Math.round(lkr).toLocaleString()}`
+}
+
+function getOriginalLKRPrice(item: CartItem): string | null {
+  const original = item.product.originalPrice
+  if (!original || original <= item.product.price) return null
+  return `LKR ${Math.round(original * 320).toLocaleString()}`
 }
 </script>
 
@@ -131,7 +135,8 @@ function getLKRPrice(item: CartItem): string {
                 {{ item.product.title }}
               </div>
               <div class="text-xs mt-1 transition-colors duration-300 text-gray-500 dark:text-gray-400">
-                {{ getLKRPrice(item) }}
+                <span v-if="getOriginalLKRPrice(item)" class="line-through mr-2 text-gray-400">{{ getOriginalLKRPrice(item) }}</span>
+                <span :class="getOriginalLKRPrice(item) ? 'font-bold text-red-600 dark:text-red-400' : ''">{{ getLKRPrice(item) }}</span>
               </div>
               <!-- Quantity controls -->
               <div class="flex items-center gap-2 mt-2">

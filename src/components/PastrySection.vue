@@ -59,6 +59,33 @@ const allPastries: PastryItem[] = [
   { id: 220, name: 'SMOKY SAUSAGE HOT DOG', price: 260, image: smokyHotDogImg,     category: 'food' },
 ]
 
+const discountedPrices: Record<number, number> = {
+  203: 175,
+  211: 220,
+  217: 375,
+  220: 230
+}
+
+function getSellingPrice(item: PastryItem): number {
+  return discountedPrices[item.id] ?? item.price
+}
+
+function getDiscountPercentage(item: PastryItem): number {
+  const salePrice = discountedPrices[item.id]
+  if (!salePrice) return 0
+  return Math.round(((item.price - salePrice) / item.price) * 100)
+}
+
+function getRating(item: PastryItem): number {
+  return Number((4.5 + (item.id % 5) * 0.1).toFixed(1))
+}
+
+function getDescription(item: PastryItem): string {
+  if (item.category === 'cake') return `A fresh and soft ${item.name.toLowerCase()} with a rich, sweet finish.`
+  if (item.category === 'food') return `A freshly prepared ${item.name.toLowerCase()} served hot with quality ingredients.`
+  return `A freshly baked ${item.name.toLowerCase()} with a crisp outside and delicious filling.`
+}
+
 const pastryCount = allPastries.filter(i => i.category === 'pastry').length
 const cakeCount   = allPastries.filter(i => i.category === 'cake').length
 
@@ -76,15 +103,16 @@ function handleAddToCart(pastry: PastryItem): void {
   const cartProduct: Product = {
     id: pastry.id,
     title: pastry.name,
-    price: pastry.price / 320,       // convert LKR to USD for cart consistency
-    description: `${PASTRY_SERVICE_TAG} — ${pastry.name}`,
+    price: getSellingPrice(pastry) / 320,       // use discounted LKR price when available
+    originalPrice: pastry.price / 320,
+    description: `${getDescription(pastry)} ${PASTRY_SERVICE_TAG}.`,
     category: 'pastry',              // ← category flag for CartSidebar
     thumbnail: pastry.image,         // ← real photo shown in cart
     images: [pastry.image],
-    rating: 4.7,
+    rating: getRating(pastry),
     stock: 30,
     brand: pastry.image,             // ← store image again for cart display
-    discountPercentage: 0
+    discountPercentage: getDiscountPercentage(pastry)
   }
   addToCart(cartProduct)
 
@@ -218,6 +246,10 @@ function toggleShowMore(): void {
               >
                 {{ PASTRY_SERVICE_TAG }}
               </span>
+              <span v-if="discountedPrices[pastry.id]"
+                    class="absolute top-2 right-2 bg-red-600 text-white text-[9px] font-bold tracking-wide px-2 py-1 rounded-sm">
+                -{{ getDiscountPercentage(pastry) }}%
+              </span>
               <div class="absolute inset-0 bg-amber-900/0 group-hover:bg-amber-900/10 transition-all duration-300"/>
             </div>
 
@@ -231,15 +263,30 @@ function toggleShowMore(): void {
                 {{ pastry.name }}
               </h3>
 
+              <div class="flex items-center justify-center gap-1 mb-2">
+                <span v-for="star in 5" :key="star" class="text-xs"
+                      :class="star <= Math.round(getRating(pastry)) ? 'text-amber-400' : 'text-gray-300 dark:text-gray-600'">★</span>
+                <span class="text-[10px] font-bold text-gray-500 dark:text-gray-400 ml-1">{{ getRating(pastry).toFixed(1) }}</span>
+              </div>
+
+              <p class="text-[10px] leading-relaxed mb-3 text-gray-500 dark:text-gray-400"
+                 :class="showAll ? 'min-h-[42px]' : 'min-h-[34px]'">
+                {{ getDescription(pastry) }}
+              </p>
+
               <div class="flex items-center justify-center gap-3">
                 <!-- Price -->
-                <span
-                  class="font-semibold transition-colors duration-300
-                         text-gray-700 dark:text-gray-300"
-                  :class="showAll ? 'text-xs' : 'text-sm'"
-                >
-                  LKR {{ pastry.price }}
-                </span>
+                <div class="flex flex-col items-center leading-tight">
+                  <span v-if="discountedPrices[pastry.id]" class="text-[9px] line-through text-gray-400">
+                    LKR {{ pastry.price }}
+                  </span>
+                  <span
+                    class="font-semibold transition-colors duration-300 text-gray-700 dark:text-gray-300"
+                    :class="showAll ? 'text-xs' : 'text-sm'"
+                  >
+                    LKR {{ getSellingPrice(pastry) }}
+                  </span>
+                </div>
 
                 <!-- ✅ WORKING CART BUTTON -->
                 <button

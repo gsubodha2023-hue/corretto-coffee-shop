@@ -11,6 +11,7 @@ export interface Product {
   stock: number
   brand?: string
   discountPercentage?: number
+  originalPrice?: number
 }
 
 export interface ProductsResponse {
