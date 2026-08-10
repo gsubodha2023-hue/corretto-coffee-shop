@@ -5,7 +5,7 @@ import { useCart } from '../composables/useCart'
 import type { CartItem } from '../types'
 
 defineProps<{ open: boolean }>()
-const emit = defineEmits<{ (e: 'close'): void }>()
+const emit = defineEmits<{ (e: 'close'): void; (e: 'checkout'): void }>()
 
 const { cartItems, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice } = useCart()
 
@@ -138,6 +138,9 @@ function getOriginalLKRPrice(item: CartItem): string | null {
                 <span v-if="getOriginalLKRPrice(item)" class="line-through mr-2 text-gray-400">{{ getOriginalLKRPrice(item) }}</span>
                 <span :class="getOriginalLKRPrice(item) ? 'font-bold text-red-600 dark:text-red-400' : ''">{{ getLKRPrice(item) }}</span>
               </div>
+              <div v-if="item.product.allowedServices" class="text-[9px] mt-1 font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wide">
+                {{ item.product.allowedServices.join(' · ') }}
+              </div>
               <!-- Quantity controls -->
               <div class="flex items-center gap-2 mt-2">
                 <button @click="updateQuantity(item.product.id, item.quantity - 1)"
@@ -176,10 +179,13 @@ function getOriginalLKRPrice(item: CartItem): string | null {
             <span>TOTAL</span>
             <span>{{ formattedTotal }}</span>
           </div>
-          <button class="w-full py-3 text-xs font-bold tracking-[0.3em] text-white transition-colors
+          <button @click="$emit('checkout')" class="w-full py-3 text-xs font-bold tracking-[0.3em] text-white transition-colors
                          bg-coffee-dark dark:bg-amber-600 hover:bg-amber-700 dark:hover:bg-amber-500">
             CHECKOUT
           </button>
+          <p class="text-[10px] text-center leading-relaxed text-gray-400 dark:text-gray-500">
+            You can browse and add products without logging in. Login is required only when you place the order.
+          </p>
           <button @click="clearCart"
                   class="w-full flex items-center justify-center gap-2 text-xs py-1 transition-colors
                          text-gray-400 dark:text-gray-500 hover:text-red-500">

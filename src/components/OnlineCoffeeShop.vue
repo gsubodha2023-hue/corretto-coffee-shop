@@ -218,7 +218,8 @@ function handleAddToCart(product: CoffeeProduct): void {
     rating: getRating(product),
     stock: 50,
     brand: product.labelColor,
-    discountPercentage: getDiscountPercentage(product)
+    discountPercentage: getDiscountPercentage(product),
+    allowedServices: ['takeaway', 'delivery']
   }
   addToCart(cartProduct)
   addedId.value = product.id

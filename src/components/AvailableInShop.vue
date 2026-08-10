@@ -54,42 +54,42 @@ const allItems: ShopItem[] = [
   {
     id: 301, name: 'CAPPUCCINO MILK COFFEE', price: 720,
     image: cappuccinoMilkImg,
-    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+    category: 'hot', tag: 'DINE-IN & TAKEAWAY • PRE-ORDER TIME', tagColor: 'bg-amber-700'
   },
   {
     id: 302, name: 'FLAT WHITE MILK COFFEE', price: 680,
     image: flatWhiteMilkImg,
-    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+    category: 'hot', tag: 'DINE-IN & TAKEAWAY • PRE-ORDER TIME', tagColor: 'bg-amber-700'
   },
   {
     id: 303, name: 'LATTE MACCHIATO', price: 750,
     image: latteMacchiatoImg,
-    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+    category: 'hot', tag: 'DINE-IN & TAKEAWAY • PRE-ORDER TIME', tagColor: 'bg-amber-700'
   },
   {
     id: 304, name: 'BLACK SRI LANKAN COFFEE', price: 650,
     image: blackSrilankanImg,
-    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+    category: 'hot', tag: 'DINE-IN & TAKEAWAY • PRE-ORDER TIME', tagColor: 'bg-amber-700'
   },
   {
     id: 305, name: 'BLACK ENGLAND COFFEE', price: 730,
     image: blackEnglandImg,
-    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+    category: 'hot', tag: 'DINE-IN & TAKEAWAY • PRE-ORDER TIME', tagColor: 'bg-amber-700'
   },
   {
     id: 306, name: 'WHITE CHOCO COFFEE', price: 780,
     image: whiteChocoImg,
-    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+    category: 'hot', tag: 'DINE-IN & TAKEAWAY • PRE-ORDER TIME', tagColor: 'bg-amber-700'
   },
   {
     id: 307, name: 'LATTE BROWN COFFEE', price: 680,
     image: latteBrownImg,
-    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+    category: 'hot', tag: 'DINE-IN & TAKEAWAY • PRE-ORDER TIME', tagColor: 'bg-amber-700'
   },
   {
     id: 308, name: 'ESPRESSO CLASSIC', price: 600,
     image: espressoClassicImg,
-    category: 'hot', tag: 'DINE-IN ONLY', tagColor: 'bg-amber-700'
+    category: 'hot', tag: 'DINE-IN & TAKEAWAY • PRE-ORDER TIME', tagColor: 'bg-amber-700'
   },
   // 🧊 ICE COFFEES — Dine-in, Takeaway & Delivery (8 items)
   {
@@ -198,7 +198,7 @@ function getRating(item: ShopItem): number {
 }
 
 function getDescription(item: ShopItem): string {
-  if (item.category === 'hot') return `${item.name.toLowerCase()} freshly prepared and served hot for dine-in customers.`
+  if (item.category === 'hot') return `${item.name.toLowerCase()} freshly prepared for dine-in or takeaway. Pre-book your time to reduce waiting.`
   if (item.category === 'ice') return `A refreshing ${item.name.toLowerCase()} prepared fresh and available for every service option.`
   if (item.category === 'pocket') return `A convenient ${item.name.toLowerCase()} for dine-in, takeaway, or delivery.`
   return `A chilled ${item.name.toLowerCase()} with a smooth flavour for dine-in, takeaway, or delivery.`
@@ -267,7 +267,9 @@ function handleAddToCart(item: ShopItem): void {
     rating: getRating(item),
     stock: 50,
     brand: item.tag,
-    discountPercentage: getDiscountPercentage(item)
+    discountPercentage: getDiscountPercentage(item),
+    allowedServices: item.category === 'hot' ? ['dine-in', 'takeaway'] : ['dine-in', 'takeaway', 'delivery'],
+    isHotCoffee: item.category === 'hot'
   }
   addToCart(product)
   addedId.value = item.id
@@ -293,7 +295,7 @@ function handleAddToCart(item: ShopItem): void {
         <!-- Service legend -->
         <div class="flex flex-wrap justify-center gap-3 mb-6">
           <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-amber-700 px-3 py-1 rounded-full">
-            ☕ HOT — DINE-IN ONLY
+            ☕ HOT — DINE-IN & TAKEAWAY • PRE-ORDER TIME
           </span>
           <span class="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white bg-teal-600 px-3 py-1 rounded-full">
             🧊 ICE — DINE-IN, TAKEAWAY & DELIVERY

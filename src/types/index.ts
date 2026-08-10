@@ -1,4 +1,5 @@
-// DummyJSON API Types
+export type OrderService = 'dine-in' | 'takeaway' | 'delivery'
+
 export interface Product {
   id: number
   title: string
@@ -12,6 +13,8 @@ export interface Product {
   brand?: string
   discountPercentage?: number
   originalPrice?: number
+  allowedServices?: OrderService[]
+  isHotCoffee?: boolean
 }
 
 export interface ProductsResponse {
@@ -21,13 +24,11 @@ export interface ProductsResponse {
   limit: number
 }
 
-// Cart
 export interface CartItem {
   product: Product
   quantity: number
 }
 
-// Static data types
 export interface StaticCoffeeProduct {
   id: number
   name: string
@@ -49,4 +50,44 @@ export interface HeroSlide {
   title: string
   description: string
   image: string
+}
+
+export interface CustomerAccount {
+  id: string
+  name: string
+  email: string
+  passwordHash: string
+  contact: string
+  address: string
+  createdAt: string
+}
+
+export interface PublicCustomer {
+  id: string
+  name: string
+  email: string
+  contact: string
+  address: string
+  createdAt: string
+}
+
+export interface CustomerOrderItem {
+  productId: number
+  title: string
+  quantity: number
+  unitPriceLkr: number
+}
+
+export interface CustomerOrder {
+  id: string
+  userId: string
+  createdAt: string
+  service: OrderService
+  scheduledFor?: string
+  contact: string
+  address?: string
+  notes?: string
+  items: CustomerOrderItem[]
+  totalLkr: number
+  status: 'Confirmed' | 'Preparing' | 'Ready' | 'Completed'
 }

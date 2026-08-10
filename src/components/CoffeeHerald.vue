@@ -35,17 +35,32 @@ Every customer feels valued and satisfied through our dedication to hospitality 
     image: '/src/assets/friendly-staff.avif',
     fallback: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=90'
   },
-  {
+ {
+ 
     id: 3,
     title: 'FRESH COFFEE',
-    shortDesc: 'Fresh coffee is brewed daily, offering rich aroma and delicious taste.',
-    fullDesc: `Fresh coffee is brewed daily, offering rich aroma and delicious taste to every customer who visits our coffee shop. We carefully select high-quality coffee beans and prepare each cup with modern brewing techniques to ensure freshness and flavor in every sip.
+    shortDesc: 'Fresh hot and cold coffee is prepared daily with rich aroma and delicious taste.',
+    fullDesc: `Fresh coffee is prepared daily using high-quality coffee beans to give every customer a rich aroma, smooth flavor, and enjoyable coffee experience.
 
-Along with our coffee, we serve freshly baked pastries, cakes, and snacks made with quality ingredients for a soft, tasty, and enjoyable experience. Whether customers choose dine-in or takeaway service, they can always enjoy fresh products and excellent quality.
+Our customers can choose from a variety of freshly prepared hot and cold coffee drinks, including espresso, cappuccino, latte, iced coffee, iced latte, and other refreshing coffee beverages.
 
-A warm café atmosphere makes every visit special and memorable for all our customers.`,
-    image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=90',
+Hot coffee is available for dine-in and takeaway with advance booking, helping customers save valuable time. Cold coffee and suitable beverages are available for dine-in, takeaway, and delivery.
+
+Along with our coffee, customers can enjoy freshly prepared pastries, cakes, snacks, and other products in a comfortable café environment.`,
+    image: '/src/assets/Fresh_coffee.png',
     fallback: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=90'
+  },
+  {
+    id: 4,
+    title: 'HOME DELIVERY',
+    shortDesc: 'Enjoy selected Corretto favorites delivered conveniently to your doorstep.',
+    fullDesc: `Corretto Coffee Shop makes ordering easier with a convenient home delivery service for selected products. Customers can browse our available delivery items online, place an order, and receive coffee products, iced beverages, pastries, cakes, snacks, and other suitable favorites at their doorstep.
+
+Our delivery service is designed to save customers valuable time while keeping orders fresh, carefully packed, and ready to enjoy. Delivery details, contact information, and the customer address are confirmed during checkout for a smooth ordering experience.
+
+Fresh hot coffee is not offered for delivery so that its quality and serving temperature are protected. Hot coffee customers can instead choose dine-in or takeaway and pre-book a preferred time.`,
+    image: '/src/assets/Home_delivery.png',
+    fallback: 'https://images.unsplash.com/photo-1526367790999-0150786686a2?w=600&q=90'
   }
 ]
 
@@ -97,7 +112,7 @@ function onImgError(e: Event, item: HeraldItem): void {
       </svg>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
 
       <!-- Header -->
       <div class="text-center mb-14">
@@ -113,8 +128,8 @@ function onImgError(e: Event, item: HeraldItem): void {
         </p>
       </div>
 
-      <!-- 3 Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <!-- 4 Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
         <div
           v-for="item in heralds"
           :key="item.id"
@@ -126,7 +141,7 @@ function onImgError(e: Event, item: HeraldItem): void {
             <img
               :src="item.image"
               :alt="item.title"
-              class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500"
+              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
               @error="(e) => onImgError(e, item)"
             />

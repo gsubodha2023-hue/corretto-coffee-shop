@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ShoppingCart, Search, Menu, X, Sun, Moon, Phone, Mail, MapPin, MessageCircle } from 'lucide-vue-next'
+import { ShoppingCart, Search, Menu, X, Sun, Moon, Phone, Mail, MapPin, MessageCircle, UserRound, LogIn } from 'lucide-vue-next'
 import { useCart } from '../composables/useCart'
+import { useAuth } from '../composables/useAuth.ts'
 
 const { totalItems } = useCart()
+const { currentUser, isLoggedIn } = useAuth()
 
 const mobileOpen   = ref<boolean>(false)
 const searchOpen   = ref<boolean>(false)
@@ -21,6 +23,8 @@ const emit = defineEmits<{
   (e: 'openCart'): void
   (e: 'search', query: string): void
   (e: 'toggleDark'): void
+  (e: 'openAuth'): void
+  (e: 'openAccount'): void
 }>()
 
 const navLinks: string[] = ['HOME', 'ABOUT US', 'SHOP', 'REVIEWS', 'SERVICES', 'BLOG', 'CONTACT US']
@@ -156,6 +160,14 @@ const selectedBlog = ref<typeof blogPosts[0] | null>(null)
           </div>
           <Moon :size="14" :class="isDark ? 'text-amber-400' : 'text-gray-500'" class="transition-colors"/>
         </button>
+        <!-- Customer Login / Account -->
+        <button @click="isLoggedIn ? $emit('openAccount') : $emit('openAuth')"
+                class="flex items-center gap-2 hover:text-amber-400 transition-colors"
+                :title="isLoggedIn ? 'Open my account' : 'Customer login'">
+          <UserRound v-if="isLoggedIn" :size="20" />
+          <LogIn v-else :size="20" />
+          <span class="hidden xl:inline text-[10px] font-bold tracking-wider max-w-24 truncate">{{ isLoggedIn ? currentUser?.name : 'LOGIN' }}</span>
+        </button>
         <!-- Cart -->
         <button @click="$emit('openCart')" class="relative hover:text-amber-400 transition-colors">
           <ShoppingCart :size="20" />
@@ -196,6 +208,10 @@ const selectedBlog = ref<typeof blogPosts[0] | null>(null)
                :class="link === 'CONTACT US' ? 'text-amber-400' : ''">{{ link }}</a>
           </li>
         </ul>
+        <button @click="mobileOpen = false; isLoggedIn ? $emit('openAccount') : $emit('openAuth')"
+                class="w-full mb-4 py-2.5 border border-white/20 text-xs font-bold tracking-widest hover:border-amber-400 hover:text-amber-400">
+          {{ isLoggedIn ? `MY ACCOUNT — ${currentUser?.name}` : 'CUSTOMER LOGIN / CREATE ACCOUNT' }}
+        </button>
         <div class="flex items-center gap-3 pt-4 border-t border-white/10">
           <span class="text-xs text-white/60 tracking-widest">{{ isDark ? '🌙 DARK' : '☀️ LIGHT' }}</span>
           <button @click="$emit('toggleDark')"

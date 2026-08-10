@@ -112,7 +112,8 @@ function handleAddToCart(pastry: PastryItem): void {
     rating: getRating(pastry),
     stock: 30,
     brand: pastry.image,             // ← store image again for cart display
-    discountPercentage: getDiscountPercentage(pastry)
+    discountPercentage: getDiscountPercentage(pastry),
+    allowedServices: ['dine-in', 'takeaway', 'delivery']
   }
   addToCart(cartProduct)
 

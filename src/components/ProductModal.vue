@@ -1,72 +1,91 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import type { Product } from '../types'
 import { useCart } from '../composables/useCart'
+import { X, ShoppingCart, Star } from 'lucide-vue-next'
 
-const props = defineProps<{ product: Product; index: number }>()
-const emit  = defineEmits<{ (e: 'viewDetail', product: Product): void }>()
+const props = defineProps<{ product: Product }>()
+const emit  = defineEmits<{ (e: 'close'): void }>()
+
 const { addToCart } = useCart()
+const added = ref<boolean>(false)
 
-const coffeeNames: string[] = [
-  'Cappuccino Milk Coffee','Flat White Milk Coffee','Latte Macchiato Coffee',
-  'Black Sri Lankan Coffee','Black England Coffee','White Choco Coffee',
-  'Latte Brown Coffee','Ice Latte Coffee','Espresso Classic',
-  'Mocha Delight','Cold Brew Special','Americano Rich'
-]
+const lkrPrice = computed<number>(() => Math.round(props.product.price * 320))
 
-const coffeePrices: number[] = [720,680,750,650,730,780,680,550,600,800,850,620]
+function handleAddToCart(): void {
+  addToCart(props.product)
+  added.value = true
+  setTimeout(() => { added.value = false }, 2000)
+}
 
-const coffeeImages: string[] = [
-  'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&q=80',
-  'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=400&q=80',
-  'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80',
-  'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400&q=80',
-  'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80',
-  'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&q=80',
-  'https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?w=400&q=80',
-  'https://images.unsplash.com/photo-1517959105821-eaf2591984ca?w=400&q=80',
-  'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&q=80',
-  'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80',
-  'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=80',
-  'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80',
-]
-
-const displayName  = coffeeNames[props.index % coffeeNames.length]
-const displayPrice = coffeePrices[props.index % coffeePrices.length]
-const displayImage = coffeeImages[props.index % coffeeImages.length]
+function handleBackdropClick(event: MouseEvent): void {
+  if ((event.target as HTMLElement).id === 'modal-backdrop') emit('close')
+}
 </script>
 
 <template>
-  <div class="group hover:shadow-md transition-all duration-300 border
-              border-gray-200 dark:border-gray-700
-              bg-white dark:bg-gray-800">
+  <Teleport to="body">
+    <div
+      id="modal-backdrop"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/70"
+      @click="handleBackdropClick"
+    >
+      <div class="max-w-2xl w-full rounded-sm shadow-2xl overflow-hidden flex flex-col md:flex-row transition-colors duration-300
+                  bg-white dark:bg-gray-800">
 
-    <!-- Image -->
-    <div class="overflow-hidden cursor-pointer" @click="$emit('viewDetail', product)">
-      <img
-        :src="displayImage" :alt="displayName"
-        class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500"
-      />
-    </div>
+        <!-- Image side -->
+        <div class="md:w-1/2 relative bg-gray-100 dark:bg-gray-700">
+          <img
+            :src="product.images?.[0] || product.thumbnail"
+            :alt="product.title"
+            class="w-full h-64 md:h-full object-cover"
+          />
+          <button @click="$emit('close')"
+                  class="absolute top-3 right-3 rounded-full p-1 transition-colors
+                         bg-black/50 hover:bg-black text-white">
+            <X :size="16" />
+          </button>
+        </div>
 
-    <!-- Info -->
-    <div class="p-3 text-center">
-      <h3 class="font-bold text-[11px] tracking-[0.15em] mb-2 uppercase cursor-pointer transition-colors duration-300
-                 text-coffee-dark dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300"
-          @click="$emit('viewDetail', product)">
-        {{ displayName }}
-      </h3>
-      <div class="flex items-center justify-center gap-3">
-        <span class="text-sm font-semibold transition-colors duration-300
-                     text-gray-700 dark:text-gray-300">
-          LKR {{ displayPrice }}
-        </span>
-        <button
-          @click="addToCart(product)"
-          class="text-lg transition-colors
-                 text-gray-500 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400"
-          title="Add to cart"
-        >🛒</button>
+        <!-- Content side -->
+        <div class="md:w-1/2 p-8 flex flex-col justify-between">
+          <div>
+            <div class="text-[10px] tracking-[0.3em] font-bold uppercase mb-2 text-amber-600">
+              {{ product.category }}
+            </div>
+            <h3 class="font-bold text-xl mb-2 leading-tight transition-colors duration-300
+                       text-coffee-dark dark:text-white"
+                style="font-family:'Playfair Display',Georgia,serif;">
+              {{ product.title }}
+            </h3>
+            <div class="flex items-center gap-1 mb-4">
+              <Star :size="14" class="fill-amber-400 text-amber-400" />
+              <span class="text-sm transition-colors duration-300 text-gray-600 dark:text-gray-400">
+                {{ product.rating.toFixed(1) }}
+              </span>
+              <span class="text-xs ml-1 transition-colors duration-300 text-gray-400 dark:text-gray-500">
+                ({{ product.stock }} in stock)
+              </span>
+            </div>
+            <p class="text-sm leading-relaxed mb-6 transition-colors duration-300
+                      text-gray-500 dark:text-gray-400">
+              {{ product.description }}
+            </p>
+            <div class="text-2xl font-bold mb-6 transition-colors duration-300
+                        text-coffee-dark dark:text-white">
+              LKR {{ lkrPrice.toLocaleString() }}
+            </div>
+          </div>
+          <button
+            @click="handleAddToCart"
+            class="w-full flex items-center justify-center gap-3 py-3 font-bold text-sm tracking-[0.2em] transition-all duration-300"
+            :class="added ? 'bg-green-600 text-white' : 'bg-coffee-dark dark:bg-amber-600 text-white hover:bg-amber-700'"
+          >
+            <ShoppingCart :size="16" />
+            {{ added ? '✓ ADDED TO CART' : 'ADD TO CART' }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+  </Teleport>
 </template>
